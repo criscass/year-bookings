@@ -1,0 +1,77 @@
+<script lang="ts">
+	import calendarize from '$lib/functions/calendarize';
+
+	export let year = 2023;
+	export let month = 0; //Jan
+	export let offset = 0; // Sun
+	export let today: Date | null = null; // Todays Date
+
+	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+	// prettier-ignore
+	export const months = [ 'Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec'
+	];
+
+	$: today_month = today && today.getMonth();
+	$: today_year = today && today.getFullYear();
+	$: today_day = today && today.getDate();
+
+	// Month array for prev, current and next month
+	let prev = calendarize(new Date(year, month - 1), offset);
+	let current = calendarize(new Date(year, month), offset);
+	let next = calendarize(new Date(year, month + 1), offset);
+
+	function toPrev() {
+		[current, next] = [prev, current];
+
+		if (--month < 0) {
+			month = 11;
+			year--;
+		}
+
+		prev = calendarize(new Date(year, month - 1), offset);
+	}
+
+	function toNext() {
+		[prev, current] = [current, next];
+
+		if (++month > 11) {
+			month = 0;
+			year++;
+		}
+
+		next = calendarize(new Date(year, month + 1), offset);
+	}
+	// Returns true if year, month and day corrisponds to todays date
+	function isToday(day) {
+		return today && today_year === year && today_month === month && today_day === day;
+	}
+</script>
+
+<div>
+	<header>
+		<button on:click={toPrev}><span> &#60 </span> </button>
+		<h4>{months[month]} {year}</h4>
+		<button on:click={toNext}><span> &#62 </span></button>
+	</header>
+
+	{#each labels as txt, idx (txt)}
+		<span>{labels[(idx + offset) % 7]}</span>
+	{/each}
+
+	{#each { length: 6 } as w, idxw (idxw)}
+		{#if current[idxw]}
+			{#each { length: 7 } as d, idxd (idxd)}
+				{#if current[idxw][idxd] != 0}
+					<span>
+						{current[idxw][idxd]}
+					</span>
+				{:else if idxw < 1}
+					<span>{prev[prev.length - 1][idxd]}</span>
+				{:else}
+					<span>{next[0][idxd]}</span>
+				{/if}
+			{/each}
+		{/if}
+	{/each}
+</div>
