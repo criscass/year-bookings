@@ -1,10 +1,13 @@
 <script lang="ts">
 	import calendarize from '$lib/functions/calendarize';
 
-	export let year = 2023;
+	import { year } from '../stores/store';
 	export let month = 0; //Jan
 	export let offset = 0; // Sun
 	export let today: Date | null = null; // Todays Date
+	export let today_day = 0;
+	export let today_year = 0;
+	export let today_month = 0;
 
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -12,14 +15,10 @@
 	export const months = [ 'Jan','Feb','Mar','Apr','May','Jun','July','Aug','Sep','Oct','Nov','Dec'
 	];
 
-	$: today_month = today && today.getMonth();
-	$: today_year = today && today.getFullYear();
-	$: today_day = today && today.getDate();
-
 	// Month array for prev, current and next month
-	let prev = calendarize(new Date(year, month - 1), offset);
-	let current = calendarize(new Date(year, month), offset);
-	let next = calendarize(new Date(year, month + 1), offset);
+	let prev = calendarize(new Date($year, month - 1), offset);
+	let current = calendarize(new Date($year, month), offset);
+	let next = calendarize(new Date($year, month + 1), offset);
 
 	//  **********************************************************
 
@@ -49,7 +48,7 @@
 
 	// Returns true if year, month and day corrisponds to todays date
 	function isToday(day: number) {
-		return today && today_year === year && today_month === month && today_day === day;
+		return today && today_year === $year && today_month === month && today_day === day;
 	}
 </script>
 
