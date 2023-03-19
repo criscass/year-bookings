@@ -7,3 +7,12 @@ declare namespace App {
 	// interface Error {}
 	// interface Platform {}
 }
+
+interface booking {
+	name: string;
+	year: number;
+	month: number;
+	startOnDay: number;
+	endOnDay: number;
+	color: string;
+}

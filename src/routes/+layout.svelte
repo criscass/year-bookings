@@ -32,5 +32,5 @@
 		</AppBar>
 	</svelte:fragment>
 	<!-- Page Route Content -->
-	<slot {year} />
+	<slot />
 </AppShell>

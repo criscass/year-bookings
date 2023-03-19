@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Month from '$lib/components/Month.svelte';
 	const today = new Date();
 	const today_month = today && today.getMonth();

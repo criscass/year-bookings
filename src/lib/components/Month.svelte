@@ -16,35 +16,9 @@
 	];
 
 	// Month array for prev, current and next month
-	let prev = calendarize(new Date($year, month - 1), offset);
-	let current = calendarize(new Date($year, month), offset);
-	let next = calendarize(new Date($year, month + 1), offset);
-
-	//  **********************************************************
-
-	// Functions for previous or next month buttons
-	// function toPrev() {
-	// 	[current, next] = [prev, current];
-
-	// 	if (--month < 0) {
-	// 		month = 11;
-	// 		year--;
-	// 	}
-
-	// 	prev = calendarize(new Date(year, month - 1), offset);
-	// }
-
-	// function toNext() {
-	// 	[prev, current] = [current, next];
-
-	// 	if (++month > 11) {
-	// 		month = 0;
-	// 		year++;
-	// 	}
-
-	// 	next = calendarize(new Date(year, month + 1), offset);
-	// }
-	//  **********************************************************
+	$: prev = calendarize(new Date($year, month - 1), offset);
+	$: current = calendarize(new Date($year, month), offset);
+	$: next = calendarize(new Date($year, month + 1), offset);
 
 	// Returns true if year, month and day corrisponds to todays date
 	function isToday(day: number) {
@@ -52,16 +26,17 @@
 	}
 </script>
 
-<div class="card variant-soft pb-4 pt-2 px-8">
+<div class="card variant-soft py-4 px-4">
 	<header class="card-header pt-2 mb-2">
 		<h4 class="unstyled text-2xl">{months[month]}</h4>
 	</header>
 
 	<section class="grid grid-cols-7 gap-4 text-lg text-center">
+		<!-- Renders the week days labels array-->
 		{#each labels as txt, idx (txt)}
 			<span>{labels[(idx + offset) % 7]}</span>
 		{/each}
-
+		<!-- Renders the Days Array-->
 		{#each { length: 6 } as w, idxw (idxw)}
 			{#if current[idxw]}
 				{#each { length: 7 } as d, idxd (idxd)}
@@ -70,9 +45,9 @@
 							{current[idxw][idxd]}
 						</span>
 					{:else if idxw < 1}
-						<span>{prev[prev.length - 1][idxd]}</span>
+						<span class="opacity-0">{prev[prev.length - 1][idxd]}</span>
 					{:else}
-						<span>{next[0][idxd]}</span>
+						<span class="opacity-0">{next[0][idxd]}</span>
 					{/if}
 				{/each}
 			{/if}
