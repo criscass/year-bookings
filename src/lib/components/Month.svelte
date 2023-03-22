@@ -1,9 +1,9 @@
 <script lang="ts">
 	import calendarize from '$lib/functions/calendarize';
+	import { onMount } from 'svelte';
 
 	import { year } from '../stores/store';
 	export let month = 0; //Jan
-	export let offset = 0; // Sun
 	export let today: Date | null = null; // Todays Date
 	export let today_day = 0;
 	export let today_year = 0;
@@ -16,9 +16,13 @@
 	];
 
 	// Month array for prev, current and next month
-	$: prev = calendarize(new Date($year, month - 1), offset);
-	$: current = calendarize(new Date($year, month), offset);
-	$: next = calendarize(new Date($year, month + 1), offset);
+	$: prev = calendarize(new Date($year, month - 1));
+	$: current = calendarize(new Date($year, month));
+	$: next = calendarize(new Date($year, month + 1));
+
+	// onMount(() => {
+	// 	console.log(prev);
+	// });
 
 	// Returns true if year, month and day corrisponds to todays date
 	function isToday(day: number) {
@@ -34,20 +38,29 @@
 	<section class="grid grid-cols-7 gap-4 text-lg text-center">
 		<!-- Renders the week days labels array-->
 		{#each labels as txt, idx (txt)}
-			<span>{labels[(idx + offset) % 7]}</span>
+			<span>{labels[idx % 7]}</span>
 		{/each}
 		<!-- Renders the Days Array-->
 		{#each { length: 6 } as w, idxw (idxw)}
 			{#if current[idxw]}
 				{#each { length: 7 } as d, idxd (idxd)}
-					{#if current[idxw][idxd] != 0}
+					<!-- {#if current[idxw][idxd] != 0} -->
+
+					{@const day = current[idxw][idxd]}
+					{#if typeof day === 'object'}
 						<span>
-							{current[idxw][idxd]}
+							{day.dayNumber}
 						</span>
 					{:else if idxw < 1}
-						<span class="opacity-0">{prev[prev.length - 1][idxd]}</span>
+						{@const prevDay = prev[prev.length - 1][idxd]}
+						{#if typeof prevDay === 'object'}
+							<span class="opacity-25">{prevDay.dayNumber}</span>
+						{/if}
 					{:else}
-						<span class="opacity-0">{next[0][idxd]}</span>
+						{@const nexDay = next[0][idxd]}
+						{#if typeof nexDay === 'object'}
+							<span class="opacity-25">{nexDay.dayNumber}</span>
+						{/if}
 					{/if}
 				{/each}
 			{/if}

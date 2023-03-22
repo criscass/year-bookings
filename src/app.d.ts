@@ -16,3 +16,9 @@ interface booking {
 	endOnDay: number;
 	color: string;
 }
+
+interface Day {
+	dayNumber: number;
+	color: string;
+	isBooked: boolean;
+}
