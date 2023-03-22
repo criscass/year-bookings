@@ -2,21 +2,17 @@ import { writable } from 'svelte/store';
 
 export const year = writable(2023);
 
-export const bookings: booking[] = [
+export const bookings = writable<booking[]>([
 	{
 		name: 'Mr White',
-		year: 2023,
-		month: 3,
-		startOnDay: 21,
-		endOnDay: 29,
+		startOnDay: new Date(2023, 2, 21),
+		endOnDay: new Date(2023, 2, 29),
 		color: 'red'
 	},
 	{
 		name: 'Mr Green',
-		year: 2023,
-		month: 4,
-		startOnDay: 5,
-		endOnDay: 17,
+		startOnDay: new Date(2023, 3, 10),
+		endOnDay: new Date(2023, 3, 17),
 		color: 'green'
 	}
-];
+]);

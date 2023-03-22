@@ -2,7 +2,7 @@
 	import calendarize from '$lib/functions/calendarize';
 	import { onMount } from 'svelte';
 
-	import { year } from '../stores/store';
+	import { year, bookings } from '../stores/store';
 	export let month = 0; //Jan
 	export let today: Date | null = null; // Todays Date
 	export let today_day = 0;
@@ -16,13 +16,13 @@
 	];
 
 	// Month array for prev, current and next month
-	$: prev = calendarize(new Date($year, month - 1));
-	$: current = calendarize(new Date($year, month));
-	$: next = calendarize(new Date($year, month + 1));
+	$: prev = calendarize(new Date($year, month - 1), $bookings);
+	$: current = calendarize(new Date($year, month), $bookings);
+	$: next = calendarize(new Date($year, month + 1), $bookings);
 
-	// onMount(() => {
-	// 	console.log(prev);
-	// });
+	onMount(() => {
+		console.log(current);
+	});
 
 	// Returns true if year, month and day corrisponds to todays date
 	function isToday(day: number) {
@@ -54,12 +54,12 @@
 					{:else if idxw < 1}
 						{@const prevDay = prev[prev.length - 1][idxd]}
 						{#if typeof prevDay === 'object'}
-							<span class="opacity-25">{prevDay.dayNumber}</span>
+							<span class="opacity-0">{prevDay.dayNumber}</span>
 						{/if}
 					{:else}
 						{@const nexDay = next[0][idxd]}
 						{#if typeof nexDay === 'object'}
-							<span class="opacity-25">{nexDay.dayNumber}</span>
+							<span class="opacity-0">{nexDay.dayNumber}</span>
 						{/if}
 					{/if}
 				{/each}

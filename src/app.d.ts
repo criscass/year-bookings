@@ -10,15 +10,14 @@ declare namespace App {
 
 interface booking {
 	name: string;
-	year: number;
-	month: number;
-	startOnDay: number;
-	endOnDay: number;
+	startOnDay: Date;
+	endOnDay: Date;
 	color: string;
 }
 
 interface Day {
 	dayNumber: number;
-	color: string;
+	color1: string;
+	color2: string;
 	isBooked: boolean;
 }
