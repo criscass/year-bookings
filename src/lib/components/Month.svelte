@@ -1,6 +1,6 @@
 <script lang="ts">
 	import calendify from '$lib/functions/calendify';
-	import { onMount } from 'svelte';
+	// import { onMount } from 'svelte';
 
 	import { year, bookings } from '../stores/store';
 	export let month = 0; //Jan
@@ -20,9 +20,9 @@
 	$: current = calendify(new Date($year, month), $bookings);
 	$: next = calendify(new Date($year, month + 1), $bookings);
 
-	onMount(() => {
-		console.log(current);
-	});
+	// onMount(() => {
+	// 	console.log(current);
+	// });
 
 	// Returns true if year, month and day corrisponds to todays date
 	function isToday(day: number) {
@@ -48,7 +48,7 @@
 
 					{@const day = current[idxw][idxd]}
 					{#if typeof day === 'object'}
-						<span>
+						<span class={day.color1 === '' ? '' : day.color1}>
 							{day.dayNumber}
 						</span>
 					{:else if idxw < 1}
