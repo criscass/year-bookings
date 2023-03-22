@@ -1,5 +1,5 @@
 <script lang="ts">
-	import calendarize from '$lib/functions/calendarize';
+	import calendify from '$lib/functions/calendify';
 	import { onMount } from 'svelte';
 
 	import { year, bookings } from '../stores/store';
@@ -16,9 +16,9 @@
 	];
 
 	// Month array for prev, current and next month
-	$: prev = calendarize(new Date($year, month - 1), $bookings);
-	$: current = calendarize(new Date($year, month), $bookings);
-	$: next = calendarize(new Date($year, month + 1), $bookings);
+	$: prev = calendify(new Date($year, month - 1), $bookings);
+	$: current = calendify(new Date($year, month), $bookings);
+	$: next = calendify(new Date($year, month + 1), $bookings);
 
 	onMount(() => {
 		console.log(current);

@@ -22,7 +22,7 @@ export default function (target: Date, bookings: booking[]) {
 			if (++i > days) {
 				week[j++] = 0;
 			} else {
-				// this variable would rappresent the eventual booking for the day
+				// todayBookings would rappresent the eventual bookings for the day
 				// if there is no booking it's an empty []
 				const today = new Date(year, month, i);
 				const todayBookings: booking[] = bookings.filter(
