@@ -44,13 +44,21 @@
 		{#each { length: 6 } as w, idxw (idxw)}
 			{#if current[idxw]}
 				{#each { length: 7 } as d, idxd (idxd)}
-					<!-- {#if current[idxw][idxd] != 0} -->
-
 					{@const day = current[idxw][idxd]}
 					{#if typeof day === 'object'}
-						<span class={day.color1 === '' ? '' : day.color1}>
-							{day.dayNumber}
-						</span>
+						<div>
+							<span>
+								{day.dayNumber}
+							</span>
+							{#if day.color2 != ''}
+								<div class="grid grid-cols-2">
+									<div class={day.color2} />
+									<div class={day.color1} />
+								</div>
+							{:else if day.color2 === ''}
+								<div class={day.color1 === '' ? '' : day.color1} />
+							{/if}
+						</div>
 					{:else if idxw < 1}
 						{@const prevDay = prev[prev.length - 1][idxd]}
 						{#if typeof prevDay === 'object'}

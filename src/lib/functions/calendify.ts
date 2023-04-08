@@ -30,11 +30,18 @@ export default function (target: Date, bookings: booking[]) {
 						booking.startOnDay.valueOf() <= today.valueOf() &&
 						today.valueOf() <= booking.endOnDay.valueOf()
 				);
-				if (todayBookings.length != 0) {
+				if (todayBookings.length === 1) {
 					week[j++] = {
 						dayNumber: i,
 						color1: todayBookings[0].color,
 						color2: '',
+						isBooked: true
+					};
+				} else if (todayBookings.length === 2) {
+					week[j++] = {
+						dayNumber: i,
+						color1: todayBookings[0].color,
+						color2: todayBookings[1].color,
 						isBooked: true
 					};
 				} else {
