@@ -1,19 +1,3 @@
-interface newBooking {
-	id: number;
-	name: string;
-	startOnDay: Date;
-	endOnDay: Date;
-	color: string;
-}
-
-interface booking {
-	id: number;
-	name: string;
-	startOnDay: Date;
-	endOnDay: Date;
-	color: string;
-}
-
 let bookings: booking[] = [
 	{
 		id: 1,

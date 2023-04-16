@@ -1,13 +1,19 @@
 <script lang="ts">
 	import calendify from '$lib/functions/calendify';
+	import type { PageData } from '../../routes/$types';
 	// import { onMount } from 'svelte';
 
-	import { year, bookings } from '../stores/store';
+	import { year } from '../stores/store';
+
+	import { onMount } from 'svelte';
 	export let month = 0; //Jan
 	export let today: Date | null = null; // Todays Date
 	export let today_day = 0;
 	export let today_year = 0;
 	export let today_month = 0;
+	export let data: PageData;
+
+	let bookings = data.bookings;
 
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -16,17 +22,22 @@
 	];
 
 	// Month array for prev, current and next month
-	$: prev = calendify(new Date($year, month - 1), $bookings);
-	$: current = calendify(new Date($year, month), $bookings);
-	$: next = calendify(new Date($year, month + 1), $bookings);
+	$: prev = calendify(new Date($year, month - 1), bookings);
+	$: current = calendify(new Date($year, month), bookings);
+	$: next = calendify(new Date($year, month + 1), bookings);
 
-	// onMount(() => {
-	// 	console.log(current);
-	// });
+	onMount(() => {
+		console.log(bookings);
+	});
 
 	// Returns true if year, month and day corrisponds to todays date
 	function isToday(day: number) {
-		return today && today_year === $year && today_month === month && today_day === day;
+		return (
+			today &&
+			today_year === $year &&
+			today_month === month &&
+			today_day === day
+		);
 	}
 </script>
 
