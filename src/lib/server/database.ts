@@ -20,7 +20,7 @@ export function getBookings() {
 }
 
 export function addBooking(newBooking: newBooking) {
-	return [...bookings, newBooking];
+	bookings = [...bookings, newBooking];
 }
 
 export function removeBooking(id: number) {

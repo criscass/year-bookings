@@ -1,4 +1,8 @@
-<form method="POST" action="/" class="p-8">
+<script>
+	// import { enhance } from '$app/forms';
+</script>
+
+<form method="POST" action="?/create" class="p-8">
 	<input
 		type="text"
 		name="bookingName"
@@ -7,17 +11,20 @@
 		class="input w-72"
 	/>
 
-	<input type="date" name="checkIn" placeholder="check in" class="input w-48" />
+	<input
+		type="date"
+		name="check-in"
+		placeholder="check in"
+		class="input w-48"
+	/>
 
 	<input
 		type="date"
-		name="checkOut"
+		name="check-out"
 		placeholder="check out"
 		class="input w-48"
 	/>
-	<button type="button" class="btn btn-sm mr-12 px-4 text-lg variant-filled"
-		>save</button
-	>
+	<button class="btn btn-sm mr-12 px-4 text-lg variant-filled">save</button>
 </form>
 
 <style>

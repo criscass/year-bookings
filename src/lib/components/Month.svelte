@@ -5,7 +5,7 @@
 
 	import { year } from '../stores/store';
 
-	import { onMount } from 'svelte';
+	// import { onMount } from 'svelte';
 	export let month = 0; //Jan
 	export let today: Date | null = null; // Todays Date
 	export let today_day = 0;
@@ -26,9 +26,9 @@
 	$: current = calendify(new Date($year, month), bookings);
 	$: next = calendify(new Date($year, month + 1), bookings);
 
-	onMount(() => {
-		console.log(bookings);
-	});
+	// onMount(() => {
+	// 	console.log(bookings);
+	// });
 
 	// Returns true if year, month and day corrisponds to todays date
 	function isToday(day: number) {
@@ -54,10 +54,14 @@
 		<!-- Renders the Days Array-->
 		{#each { length: 6 } as w, idxw (idxw)}
 			{#if current[idxw]}
-				{#each { length: 7 } as d, idxd (idxd)}
+				{#each { length: 7 } as _, idxd (idxd)}
 					{@const day = current[idxw][idxd]}
 					{#if typeof day === 'object'}
-						<div>
+						<div
+							on:click={() => console.log(day.dayNumber, month, $year)}
+							on:keydown={() => console.log('yup')}
+							style="cursor: pointer"
+						>
 							<span>
 								{day.dayNumber}
 							</span>

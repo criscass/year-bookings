@@ -5,17 +5,9 @@
 	import '../app.postcss';
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
 	import YearButtons from '$lib/components/YearButtons.svelte';
-	import { year } from '../lib/stores/store';
-	import EditSlideDrawer from '$lib/components/EditSlideDrawer.svelte';
-	import { slide, scale } from 'svelte/transition';
+	import { year, isEditable } from '../lib/stores/store';
 
-	export let data: PageData;
-
-	let isEditable: boolean = false;
-
-	function toggleEditMode() {
-		isEditable = !isEditable;
-	}
+	import { scale } from 'svelte/transition';
 
 	function prevYear() {
 		$year = $year - 1;
@@ -42,11 +34,11 @@
 			</svelte:fragment>
 
 			<svelte:fragment slot="trail">
-				{#if !isEditable}
+				{#if !$isEditable}
 					<button
 						transition:scale={{ duration: 300 }}
 						type="button"
-						on:click={toggleEditMode}
+						on:click={() => ($isEditable = !$isEditable)}
 						class="btn btn-sm mr-12 px-4 text-lg variant-filled-surface"
 						>+</button
 					>
@@ -57,10 +49,6 @@
 		</AppBar>
 	</svelte:fragment>
 	<!-- Page Route Content -->
-	{#if isEditable}
-		<div transition:slide={{ duration: 200 }} class="h-24 sticky top-0">
-			<EditSlideDrawer />
-		</div>
-	{/if}
+
 	<slot />
 </AppShell>
