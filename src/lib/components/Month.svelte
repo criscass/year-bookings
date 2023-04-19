@@ -3,7 +3,14 @@
 	import type { PageData } from '../../routes/$types';
 	// import { onMount } from 'svelte';
 
-	import { year } from '../stores/store';
+	import {
+		year,
+		pickedCheckInDate,
+		pickedCheckOutDate,
+		isEditable,
+		checkInInputIsOnFocus,
+		checkOutInputIsOnFocus
+	} from '../stores/store';
 
 	// import { onMount } from 'svelte';
 	export let month = 0; //Jan
@@ -39,6 +46,17 @@
 			today_day === day
 		);
 	}
+	// Updates the pickedDate store variable
+	function dayPicked(year: number, month: number, day: number | Day) {
+		if ($checkInInputIsOnFocus) {
+			$pickedCheckInDate = `${months[month]} ${day}, ${year}`;
+			$checkInInputIsOnFocus = false;
+		}
+		if ($checkOutInputIsOnFocus) {
+			$pickedCheckOutDate = `${months[month]} ${day}, ${year}`;
+			$checkOutInputIsOnFocus = false;
+		}
+	}
 </script>
 
 <div class="card variant-soft py-4 px-4">
@@ -58,9 +76,13 @@
 					{@const day = current[idxw][idxd]}
 					{#if typeof day === 'object'}
 						<div
-							on:click={() => console.log(day.dayNumber, month, $year)}
-							on:keydown={() => console.log('yup')}
-							style="cursor: pointer"
+							on:click={() => {
+								$isEditable ? dayPicked($year, month, day.dayNumber) : null;
+							}}
+							on:keydown={() => {
+								$isEditable ? dayPicked($year, month, day.dayNumber) : null;
+							}}
+							class:day={$isEditable}
 						>
 							<span>
 								{day.dayNumber}
@@ -90,3 +112,13 @@
 		{/each}
 	</section>
 </div>
+
+<style>
+	.day {
+		cursor: pointer;
+	}
+	.day:hover {
+		transform: scale(1.2);
+		color: white;
+	}
+</style>
