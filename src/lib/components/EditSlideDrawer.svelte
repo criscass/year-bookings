@@ -30,14 +30,16 @@
 </script>
 
 <form method="POST" action="?/create" class="p-8">
+	<!-- Booking name -->
 	<input
 		type="text"
 		name="bookingName"
 		placeholder="name"
 		autocomplete="off"
-		class="input w-72"
+		class="input w-48"
 	/>
 
+	<!-- Check in date -->
 	<input
 		type="text"
 		name="check-in"
@@ -48,6 +50,7 @@
 		class="input w-48"
 	/>
 
+	<!-- Check out date -->
 	<input
 		type="text"
 		name="check-out"
@@ -57,6 +60,9 @@
 		bind:value={$pickedCheckOutDate}
 		class="input w-48"
 	/>
+
+	<!-- Color choice -->
+
 	<button class="btn btn-sm mr-12 px-4 text-lg variant-filled">save</button>
 </form>
 

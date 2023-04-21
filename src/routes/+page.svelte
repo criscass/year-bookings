@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { isEditable } from '../lib/stores/store';
 	import Month from '$lib/components/Month.svelte';
-	import type { ActionData, PageData } from './$types';
+	import type { PageData } from './$types';
 	import EditSlideDrawer from '$lib/components/EditSlideDrawer.svelte';
 	import { slide } from 'svelte/transition';
 	const today = new Date();
@@ -9,10 +9,11 @@
 	const today_year = today && today.getFullYear();
 	const today_day = today && today.getDate();
 	export let data: PageData;
+	console.log(data.bookings);
 </script>
 
 {#if $isEditable}
-	<div transition:slide={{ duration: 200 }} class="h-24 sticky top-0">
+	<div transition:slide={{ duration: 200 }} class="h-48 sticky top-0">
 		<EditSlideDrawer />
 	</div>
 {/if}

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import '@skeletonlabs/skeleton/themes/theme-modern.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
+
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
 	import YearButtons from '$lib/components/YearButtons.svelte';
 	import { year, isEditable } from '../lib/stores/store';
@@ -18,6 +18,7 @@
 </script>
 
 <!-- App Shell -->
+
 <AppShell>
 	<svelte:fragment slot="header">
 		<!-- App Bar -->

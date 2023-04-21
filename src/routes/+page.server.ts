@@ -3,8 +3,6 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async function () {
 	const data = db.getBookings();
-	console.log('Load Function runs now');
-	console.log(data);
 
 	return { bookings: data };
 };
