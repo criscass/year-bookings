@@ -13,7 +13,7 @@
 </script>
 
 {#if $isEditable}
-	<div transition:slide={{ duration: 200 }} class="h-48 sticky top-0">
+	<div transition:slide={{ duration: 200 }} class="h-54 sticky top-0">
 		<EditSlideDrawer />
 	</div>
 {/if}

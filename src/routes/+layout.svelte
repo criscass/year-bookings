@@ -28,11 +28,10 @@
 			slotTrail="place-content-end"
 		>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase">La Civettaia</strong>
+				<strong class="text-sm uppercase">La Civettaia</strong>
 			</svelte:fragment>
-			<svelte:fragment>
-				<YearButtons on:prevYear={prevYear} on:nextYear={nextYear} />
-			</svelte:fragment>
+
+			<YearButtons on:prevYear={prevYear} on:nextYear={nextYear} />
 
 			<svelte:fragment slot="trail">
 				{#if !$isEditable}
@@ -40,12 +39,12 @@
 						transition:scale={{ duration: 300 }}
 						type="button"
 						on:click={() => ($isEditable = !$isEditable)}
-						class="btn btn-sm mr-12 px-4 text-lg variant-filled-surface"
+						class="btn btn-sm rounded-2xl text-sm variant-filled-surface"
 						>+</button
 					>
 				{/if}
 
-				<LightSwitch />
+				<LightSwitch width="w-12" height="h-6" />
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
