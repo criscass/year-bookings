@@ -9,7 +9,7 @@
 	const today_year = today && today.getFullYear();
 	const today_day = today && today.getDate();
 	export let data: PageData;
-	console.log(data.bookings);
+	console.log(data);
 </script>
 
 {#if $isEditable}

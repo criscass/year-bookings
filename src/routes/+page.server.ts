@@ -13,12 +13,13 @@ export const actions: Actions = {
 		const bookingName = String(data.get('bookingName'));
 		const checkInDate = String(data.get('check-in'));
 		const checkOutDate = String(data.get('check-out'));
+		const bookingColor = String(data.get('bookingColor'));
 		const newBooking: newBooking = {
 			id: Date.now(),
 			name: bookingName,
 			startOnDay: new Date(checkInDate),
 			endOnDay: new Date(checkOutDate),
-			color: 'border-b-4 border-success-600'
+			color: bookingColor
 		};
 
 		db.addBooking(newBooking);

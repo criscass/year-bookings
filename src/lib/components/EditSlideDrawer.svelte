@@ -5,10 +5,10 @@
 		pickedCheckInDate,
 		pickedCheckOutDate,
 		checkOutInputIsOnFocus,
-		isEditable
+		isEditable,
+		borderColor
 	} from '../stores/store';
 
-	import ColorIcon from '$lib/icons/ColorIcon.svelte';
 	import ColorPicker from './ColorPicker.svelte';
 
 	let checkInPlaceholder = 'check in';
@@ -84,6 +84,7 @@
 	<!-- Color choice -->
 
 	<div class="  col-span-9 row-start-3 ">
+		<input type="hidden" name="bookingColor" value={$borderColor} />
 		<ColorPicker />
 	</div>
 

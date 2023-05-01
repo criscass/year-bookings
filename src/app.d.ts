@@ -37,3 +37,15 @@ interface booking {
 	endOnDay: Date;
 	color: string;
 }
+
+interface BorderColor {
+	primary: string;
+	primaryToken: string;
+	secondary: string;
+	secondaryToken: string;
+	tertiary: string;
+	success: string;
+	warning: string;
+	error: string;
+	surface: string;
+}

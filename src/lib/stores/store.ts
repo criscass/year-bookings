@@ -9,3 +9,5 @@ export let checkOutInputIsOnFocus = writable(false);
 
 export let pickedCheckInDate = writable('');
 export let pickedCheckOutDate = writable('');
+
+export let borderColor = writable('');

@@ -4,14 +4,21 @@ let bookings: booking[] = [
 		name: 'Mr White',
 		startOnDay: new Date(2023, 2, 21),
 		endOnDay: new Date(2023, 2, 29),
-		color: 'border-b-4 border-success-600'
+		color: 'primary'
 	},
 	{
 		id: 2,
 		name: 'Mr Green',
 		startOnDay: new Date(2023, 2, 12),
 		endOnDay: new Date(2023, 2, 21),
-		color: 'border-b-4 border-error-600'
+		color: 'secondary'
+	},
+	{
+		id: 3,
+		name: 'Mr Pink',
+		startOnDay: new Date(2023, 3, 2),
+		endOnDay: new Date(2023, 3, 12),
+		color: 'tertiary'
 	}
 ];
 
