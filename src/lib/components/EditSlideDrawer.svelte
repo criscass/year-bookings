@@ -88,6 +88,7 @@
 		<ColorPicker />
 	</div>
 
+	<!-- Submit button -->
 	<button
 		type="submit"
 		on:click={() => ($isEditable = !$isEditable)}
