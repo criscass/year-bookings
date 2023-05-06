@@ -1,6 +1,7 @@
 <script lang="ts">
 	import calendify from '$lib/functions/calendify';
 	import type { PageData } from '../../routes/$types';
+	import { longpress } from '../functions/longPressAction';
 	// import { onMount } from 'svelte';
 
 	import {
@@ -70,6 +71,7 @@
 			$checkOutInputIsOnFocus = false;
 		}
 	}
+	// Makes days with a booking clickable with a long press effect
 </script>
 
 <div class="card variant-soft py-4 px-4">
@@ -83,10 +85,11 @@
 			<span>{labels[idx % 7]}</span>
 		{/each}
 		<!-- Renders the Days Array-->
-		{#each { length: 6 } as w, idxw (idxw)}
+		{#each { length: 6 } as _, idxw (idxw)}
 			{#if current[idxw]}
 				{#each { length: 7 } as _, idxd (idxd)}
 					{@const day = current[idxw][idxd]}
+
 					{#if typeof day === 'object'}
 						<div
 							on:click={() => {
@@ -95,7 +98,7 @@
 							on:keydown={() => {
 								$isEditable ? dayPicked($year, month, day.dayNumber) : null;
 							}}
-							class:day={$isEditable}
+							class:day={$isEditable || day.isBooked}
 						>
 							<span>
 								{day.dayNumber}
