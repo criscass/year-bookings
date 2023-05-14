@@ -14,8 +14,8 @@ export const actions: Actions = {
 		const checkInDate = String(data.get('check-in'));
 		const checkOutDate = String(data.get('check-out'));
 		const bookingColor = String(data.get('bookingColor'));
-		const newBooking: newBooking = {
-			id: Date.now(),
+		const newBooking: Booking = {
+			id: crypto.randomUUID(),
 			name: bookingName,
 			startOnDay: new Date(checkInDate),
 			endOnDay: new Date(checkOutDate),

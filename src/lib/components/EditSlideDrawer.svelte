@@ -2,11 +2,10 @@
 	// import { enhance } from '$app/forms';
 	import {
 		checkInInputIsOnFocus,
-		pickedCheckInDate,
-		pickedCheckOutDate,
 		checkOutInputIsOnFocus,
 		isEditable,
-		borderColor
+		borderColor,
+		formStatus
 	} from '../stores/store';
 
 	import ColorPicker from './ColorPicker.svelte';
@@ -28,7 +27,7 @@
 		$checkOutInputIsOnFocus = true;
 	}
 
-	function checkOutImputFocusOut() {
+	function checkOutInputFocusOut() {
 		checkOutPlaceholder = 'check in';
 	}
 </script>
@@ -45,6 +44,7 @@
 		placeholder="name"
 		autocomplete="off"
 		class="input  col-span-11"
+		bind:value={$formStatus.name}
 	/>
 
 	<!-- close button -->
@@ -63,9 +63,9 @@
 		placeholder={checkInPlaceholder}
 		on:focus={checkInInputOnFocus}
 		on:focusout={checkInImputFocusOut}
-		bind:value={$pickedCheckInDate}
 		class="input col-span-6"
 		inputmode="none"
+		value={$formStatus.startOnDay}
 	/>
 
 	<!-- Check out date -->
@@ -75,10 +75,10 @@
 		placeholder={checkOutPlaceholder}
 		autocomplete="off"
 		on:focus={checkOutInputOnFocus}
-		on:focusout={checkOutImputFocusOut}
-		bind:value={$pickedCheckOutDate}
+		on:focusout={checkOutInputFocusOut}
 		class="input col-span-6"
 		inputmode="none"
+		value={$formStatus.endOnDay}
 	/>
 
 	<!-- Color choice -->

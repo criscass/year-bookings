@@ -2,23 +2,24 @@
 	import calendify from '$lib/functions/calendify';
 	import type { PageData } from '../../routes/$types';
 	import { longpress } from '../functions/longPressAction';
-	// import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
 	import {
 		year,
-		pickedCheckInDate,
-		pickedCheckOutDate,
 		isEditable,
 		checkInInputIsOnFocus,
-		checkOutInputIsOnFocus
+		checkOutInputIsOnFocus,
+		formStatus
 	} from '../stores/store';
 
-	// import { onMount } from 'svelte';
 	export let month = 0; //Jan
-	export let today: Date | null = null; // Todays Date
-	export let today_day = 0;
-	export let today_year = 0;
-	export let today_month = 0;
+
+	// - - - - props for today day higligthing  - - - -
+	// export const today: Date | null = null; // Todays Date
+	// export let today_day = 0;
+	// export let today_year = 0;
+	// export let today_month = 0;
+
 	export let data: PageData;
 
 	let bookings = data.bookings;
@@ -47,31 +48,54 @@
 	$: current = calendify(new Date($year, month), bookings);
 	$: next = calendify(new Date($year, month + 1), bookings);
 
-	// onMount(() => {
-	// 	console.log(bookings);
-	// });
-
 	// Returns true if year, month and day corrisponds to todays date
-	function isToday(day: number) {
-		return (
-			today &&
-			today_year === $year &&
-			today_month === month &&
-			today_day === day
-		);
-	}
-	// Updates the pickedDate store variable
+	// function isToday(day: number) {
+	// 	return (
+	// 		today &&
+	// 		today_year === $year &&
+	// 		today_month === month &&
+	// 		today_day === day
+	// 	);
+	// }
+
+	// Updates the formStatus.startOnDay and formStatus.endOnDay
+	// store variables
 	function dayPicked(year: number, month: number, day: number | Day) {
 		if ($checkInInputIsOnFocus) {
-			$pickedCheckInDate = `${months[month]} ${day}, ${year}`;
+			$formStatus.startOnDay = new Date(`${months[month]} ${day}, ${year}`);
+
 			$checkInInputIsOnFocus = false;
 		}
 		if ($checkOutInputIsOnFocus) {
-			$pickedCheckOutDate = `${months[month]} ${day}, ${year}`;
+			$formStatus.endOnDay = `${months[month]} ${day}, ${year}`;
 			$checkOutInputIsOnFocus = false;
 		}
 	}
-	// Makes days with a booking clickable with a long press effect
+
+	// Updates the store values, only on booked days, and runs the dayPicked function for all days
+
+	function handleClicks(
+		year: number,
+		month: number,
+		dayNumber: number,
+		isBooked: boolean,
+		name?: string,
+		startOnDay?: Date,
+		endOnDay?: Date
+	) {
+		$isEditable ? dayPicked(year, month, dayNumber) : null;
+
+		isBooked ? ($isEditable = !$isEditable) : null;
+		if (isBooked) {
+			$formStatus.name = name;
+			startOnDay && ($formStatus.startOnDay = startOnDay.toLocaleDateString());
+			endOnDay && ($formStatus.endOnDay = endOnDay.toLocaleDateString());
+		}
+	}
+
+	onMount(() => {
+		console.log(current);
+	});
 </script>
 
 <div class="card variant-soft py-4 px-4">
@@ -90,25 +114,47 @@
 				{#each { length: 7 } as _, idxd (idxd)}
 					{@const day = current[idxw][idxd]}
 
+					<!-- It starts from the first day of the month, not printing the days of the week at the beginning or at the end of the month, those are in fact numbers and not objects, which belong to the previous or next month  -->
+
+					<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+					// Symplify this ↓ by getting startOnDay and endOnDay directly as
+					dates, from the value in the object and then converting it to locale format string in the form. -->
+
 					{#if typeof day === 'object'}
 						<div
 							on:click={() => {
-								$isEditable ? dayPicked($year, month, day.dayNumber) : null;
+								handleClicks(
+									$year,
+									month,
+									day.dayNumber,
+									day.isBooked,
+									day.name1,
+									day.startOnDay,
+									day.endOnDay
+								);
 							}}
 							on:keydown={() => {
-								$isEditable ? dayPicked($year, month, day.dayNumber) : null;
+								handleClicks(
+									$year,
+									month,
+									day.dayNumber,
+									day.isBooked,
+									day.name1,
+									day.startOnDay,
+									day.endOnDay
+								);
 							}}
 							class:day={$isEditable || day.isBooked}
 						>
 							<span>
 								{day.dayNumber}
 							</span>
-							{#if day.color2 != ''}
+							{#if day.color2}
 								<div class="grid grid-cols-2">
 									<div class={`${borderColor[`${day.color2}`]}`} />
 									<div class={`${borderColor[`${day.color1}`]}`} />
 								</div>
-							{:else if day.color2 === ''}
+							{:else if day.color1}
 								<div
 									class={day.color1 === ''
 										? ''

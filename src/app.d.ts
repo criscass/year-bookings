@@ -8,30 +8,19 @@ declare namespace App {
 	// interface Platform {}
 }
 
-interface booking {
-	name: string;
-	startOnDay: Date;
-	endOnDay: Date;
-	color: string;
-}
-
 interface Day {
 	dayNumber: number;
-	color1: string;
-	color2: string;
+	color1?: string;
+	color2?: string;
+	name1?: string;
+	name2?: string;
 	isBooked: boolean;
+	startOnDay?: Date;
+	endOnDay?: Date;
 }
 
-interface newBooking {
-	id: number;
-	name: string;
-	startOnDay: Date;
-	endOnDay: Date;
-	color: string;
-}
-
-interface booking {
-	id: number;
+interface Booking {
+	id: string;
 	name: string;
 	startOnDay: Date;
 	endOnDay: Date;
@@ -48,4 +37,11 @@ interface BorderColor {
 	warning: string;
 	error: string;
 	surface: string;
+}
+
+interface FormStatus {
+	name: string | undefined;
+	startOnDay: string | undefined;
+	endOnDay: string | undefined;
+	color: string | undefined;
 }
