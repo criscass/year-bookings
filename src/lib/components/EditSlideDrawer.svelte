@@ -30,6 +30,15 @@
 	function checkOutInputFocusOut() {
 		checkOutPlaceholder = 'check in';
 	}
+
+	function closeAndReset() {
+		$borderColor = '';
+		$formStatus.name = '';
+		$formStatus.startOnDay = '';
+		$formStatus.endOnDay = '';
+		$formStatus.color = '';
+		$isEditable = !$isEditable;
+	}
 </script>
 
 <form
@@ -51,7 +60,7 @@
 
 	<button
 		type="button"
-		on:click={() => ($isEditable = !$isEditable)}
+		on:click={() => closeAndReset()}
 		class="col-span-1 text-2xl">X</button
 	>
 

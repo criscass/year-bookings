@@ -1,7 +1,7 @@
 <script lang="ts">
 	import calendify from '$lib/functions/calendify';
 	import type { PageData } from '../../routes/$types';
-	import { longpress } from '../functions/longPressAction';
+
 	import { onMount } from 'svelte';
 
 	import {
@@ -60,19 +60,26 @@
 
 	// Updates the formStatus.startOnDay and formStatus.endOnDay
 	// store variables
-	function dayPicked(year: number, month: number, day: number | Day) {
+	function dayPicked(year: number, month: number, day: number) {
 		if ($checkInInputIsOnFocus) {
-			$formStatus.startOnDay = new Date(`${months[month]} ${day}, ${year}`);
+			$formStatus.startOnDay = `${months[month]}/${day}/${year}`;
 
 			$checkInInputIsOnFocus = false;
 		}
 		if ($checkOutInputIsOnFocus) {
-			$formStatus.endOnDay = `${months[month]} ${day}, ${year}`;
+			$formStatus.endOnDay = `${months[month]}/${day}/${year}`;
 			$checkOutInputIsOnFocus = false;
 		}
 	}
 
 	// Updates the store values, only on booked days, and runs the dayPicked function for all days
+
+	const options = {
+		weekday: 'narrow',
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric'
+	};
 
 	function handleClicks(
 		year: number,
@@ -85,7 +92,7 @@
 	) {
 		$isEditable ? dayPicked(year, month, dayNumber) : null;
 
-		isBooked ? ($isEditable = !$isEditable) : null;
+		isBooked ? ($isEditable = true) : null;
 		if (isBooked) {
 			$formStatus.name = name;
 			startOnDay && ($formStatus.startOnDay = startOnDay.toLocaleDateString());
@@ -93,9 +100,9 @@
 		}
 	}
 
-	onMount(() => {
-		console.log(current);
-	});
+	// onMount(() => {
+	// 	console.log(current);
+	// });
 </script>
 
 <div class="card variant-soft py-4 px-4">
