@@ -7,6 +7,11 @@
 		borderColor,
 		formStatus
 	} from '../../lib/stores/store';
+	import type { PageData } from '../../routes/$types';
+
+	export let data: PageData;
+
+	$: bookings = data.bookings;
 </script>
 
 <div class="p-12">
@@ -53,6 +58,11 @@
 			</h3>
 		</div>
 	</div>
+</div>
+<div>
+	<pre>
+  {JSON.stringify(bookings, null, 4)}
+</pre>
 </div>
 
 <style>

@@ -5,12 +5,14 @@
 	import EditSlideDrawer from '$lib/components/EditSlideDrawer.svelte';
 	import { slide } from 'svelte/transition';
 	import StoreShow from '$lib/components/StoreShow.svelte';
+	import { onMount } from 'svelte';
 	const today = new Date();
 	const today_month = today && today.getMonth();
 	const today_year = today && today.getFullYear();
 	const today_day = today && today.getDate();
 	export let data: PageData;
-	console.log(data);
+
+	const bookings = data.bookings;
 </script>
 
 {#if $isEditable}
@@ -29,4 +31,4 @@
 	{/each}
 </div>
 
-<StoreShow />
+<StoreShow {data} />

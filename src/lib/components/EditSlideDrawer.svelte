@@ -1,5 +1,5 @@
 <script lang="ts">
-	// import { enhance } from '$app/forms';
+	import { enhance } from '$app/forms';
 	import {
 		checkInInputIsOnFocus,
 		checkOutInputIsOnFocus,
@@ -43,8 +43,8 @@
 
 <form
 	method="POST"
-	action="?/create"
 	class="grid grid-cols-12 gap-4 p-4 backdrop-blur-md max-w-screen"
+	use:enhance
 >
 	<!-- Booking name -->
 	<input
@@ -52,7 +52,7 @@
 		name="bookingName"
 		placeholder="name"
 		autocomplete="off"
-		class="input  col-span-11"
+		class="input col-span-11"
 		bind:value={$formStatus.name}
 	/>
 
@@ -92,7 +92,7 @@
 
 	<!-- Color choice -->
 
-	<div class="  col-span-9 row-start-3 ">
+	<div class="  col-span-9 row-start-3">
 		<input type="hidden" name="bookingColor" value={$borderColor} />
 		<ColorPicker />
 	</div>
@@ -100,8 +100,10 @@
 	<!-- Submit button -->
 	<button
 		type="submit"
-		on:click={() => ($isEditable = !$isEditable)}
-		class="btn btn-sm px-8 py-6   text-lg variant-filled   col-span-3 justify-self-center self-center h-8 w-8"
+		on:click={() => {
+			$isEditable = !$isEditable;
+		}}
+		class="btn btn-sm px-8 py-6 text-lg variant-filled col-span-3 justify-self-center self-center h-8 w-8"
 		>save</button
 	>
 </form>

@@ -1,14 +1,13 @@
-import * as db from '../lib/server/database';
+import { getBookings, addBooking } from '../lib/server/database';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async function () {
-	const data = db.getBookings();
-
-	return { bookings: data };
+export const load: PageServerLoad = async () => {
+	const bookings = getBookings();
+	return { bookings: bookings };
 };
 
 export const actions: Actions = {
-	create: async ({ request }) => {
+	default: async ({ request }) => {
 		const data = await request.formData();
 		const bookingName = String(data.get('bookingName'));
 		const checkInDate = String(data.get('check-in'));
@@ -22,7 +21,7 @@ export const actions: Actions = {
 			color: bookingColor
 		};
 
-		db.addBooking(newBooking);
+		addBooking(newBooking);
 		return { success: true };
 	}
 };

@@ -22,7 +22,7 @@
 
 	export let data: PageData;
 
-	let bookings = data.bookings;
+	$: bookings = data.bookings;
 
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 

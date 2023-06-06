@@ -35,7 +35,5 @@
     "vite": "^4.0.0"
   },
   "type": "module",
-  "dependencies": {
-    "@floating-ui/dom": "^1.2.7"
-  }
+  "dependencies": {}
 }
