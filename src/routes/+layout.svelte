@@ -2,23 +2,12 @@
 	import '@skeletonlabs/skeleton/themes/theme-modern.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
-	import {
-		computePosition,
-		autoUpdate,
-		flip,
-		shift,
-		offset,
-		arrow
-	} from '@floating-ui/dom';
-	import { storePopup } from '@skeletonlabs/skeleton';
 
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
 	import YearButtons from '$lib/components/YearButtons.svelte';
 	import { year, isEditable } from '../lib/stores/store';
 
 	import { scale } from 'svelte/transition';
-
-	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
 	function prevYear() {
 		$year = $year - 1;
@@ -47,7 +36,7 @@
 			<svelte:fragment slot="trail">
 				{#if !$isEditable}
 					<button
-						transition:scale={{ duration: 300 }}
+						transition:scale|global={{ duration: 300 }}
 						type="button"
 						on:click={() => ($isEditable = !$isEditable)}
 						class="btn btn-sm rounded-2xl text-sm variant-filled-surface"

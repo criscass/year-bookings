@@ -22,6 +22,7 @@ export const actions: Actions = {
 		};
 
 		addBooking(newBooking);
+
 		return { success: true };
 	}
 };
