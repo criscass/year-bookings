@@ -2,12 +2,28 @@
 	import '@skeletonlabs/skeleton/themes/theme-modern.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
+	import type { LayoutData } from './$types';
+	import { onMount } from 'svelte';
 
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
 	import YearButtons from '$lib/components/YearButtons.svelte';
 	import { year, isEditable } from '../lib/stores/store';
+	import { invalidate } from '$app/navigation';
 
 	import { scale } from 'svelte/transition';
+
+	export let data: LayoutData;
+	$: ({ session, supabase } = data);
+	onMount(() => {
+		const {
+			data: { subscription }
+		} = supabase.auth.onAuthStateChange((event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth');
+			}
+		});
+		return () => subscription.unsubscribe();
+	});
 
 	function prevYear() {
 		$year = $year - 1;

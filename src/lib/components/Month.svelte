@@ -4,6 +4,18 @@
 
 	import { onMount } from 'svelte';
 
+	interface BorderColor {
+		primary: string;
+		primaryToken: string;
+		secondary: string;
+		secondaryToken: string;
+		tertiary: string;
+		success: string;
+		warning: string;
+		error: string;
+		surface: string;
+	}
+
 	import {
 		year,
 		isEditable,
