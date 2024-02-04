@@ -1,9 +1,11 @@
-create table
-bookings (
-  id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  guest_name TEXT NOT NULL,
-  startOnDay DATE NOT NULL,
-  endOnDay DATE NOT NULL,
-  color TEXT NOT NULL,
+create table public.bookings(
+  id int primary key generated always as identity,
+  guest_name text not null,
+  startOnDay date not null,
+  endOnDay date not null,
+  color text not null,
   created_at timestamptz default now()
 );
+
+alter table public.bookings enable row level security;
+
