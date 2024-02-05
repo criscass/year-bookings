@@ -24,7 +24,7 @@
 		>
 	</button>
 
-	<strong class="text-4xl">{$year}</strong>
+	<strong class="text-5xl">{$year}</strong>
 
 	<!-- Right arrow button -->
 	<button
@@ -44,3 +44,9 @@
 		>
 	</button>
 </div>
+
+<style>
+	.title {
+		font-family: 'Caveat Variable', sans-serif;
+	}
+</style>
