@@ -8,10 +8,10 @@
 	import '../app.postcss';
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
-
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
 	import { invalidate } from '$app/navigation';
 
+	//Rather use stripe then this client side supabase client
 	export let data: LayoutData;
 	$: ({ session, supabase } = data);
 	onMount(() => {
