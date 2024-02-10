@@ -2,7 +2,7 @@
 	import '@skeletonlabs/skeleton/themes/theme-modern.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../../app.postcss';
-
+	import { page } from '$app/stores';
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
 </script>
 
@@ -16,9 +16,19 @@
 			slotTrail="place-content-end"
 		>
 			<svelte:fragment slot="lead">
-				<span class="text-2xl">Login</span>
+				<button
+					class="btn btn-sm"
+					class:variant-filled={$page.url.pathname === '/login'}
+					><a href="/login">Login</a></button
+				>
+
+				<button
+					class="btn btn-sm"
+					class:variant-filled={$page.url.pathname === '/register'}
+					><a href="/register">Register</a></button
+				>
 			</svelte:fragment>
-			<span class="text-2xl">Year Calendar</span>
+
 			<svelte:fragment slot="trail">
 				<LightSwitch width="w-12" height="h-6" />
 			</svelte:fragment>

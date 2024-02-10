@@ -24,7 +24,7 @@
 		>
 	</button>
 
-	<strong class="text-5xl">{$year}</strong>
+	<strong class="text-2xl">{$year}</strong>
 
 	<!-- Right arrow button -->
 	<button

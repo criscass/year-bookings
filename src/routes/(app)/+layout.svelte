@@ -2,6 +2,7 @@
 	import '@skeletonlabs/skeleton/themes/theme-modern.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 
+	import IconAccountBoxOutline from '~icons/mdi/account-box-outline';
 	import '../../app.postcss';
 
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
@@ -28,7 +29,7 @@
 			slotTrail="place-content-end"
 		>
 			<svelte:fragment slot="lead">
-				<strong class="text-5xl title ml-5">La Civettaia</strong>
+				<strong class="text-xl ml-5">La Civettaia</strong>
 			</svelte:fragment>
 
 			<YearButtons on:prevYear={prevYear} on:nextYear={nextYear} />
@@ -39,12 +40,14 @@
 						transition:scale|global={{ duration: 300 }}
 						type="button"
 						on:click={() => ($isEditable = !$isEditable)}
-						class="btn btn-sm rounded-2xl text-sm variant-filled-surface"
+						class="btn btn-m rounded-2xl text-2xl variant-filled-surface"
 						>+</button
 					>
 				{/if}
-
-				<LightSwitch width="w-12" height="h-6" />
+				<a href="/account">
+					<IconAccountBoxOutline class="icon-box" />
+				</a>
+				<!-- <LightSwitch width="w-12" height="h-6" /> -->
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
@@ -54,7 +57,10 @@
 </AppShell>
 
 <style>
-	.title {
-		font-family: 'Caveat Variable', sans-serif;
+	:global(.icon-box) {
+		font-size: 2rem;
+	}
+	:global(.icon-box):hover {
+		color: red;
 	}
 </style>
