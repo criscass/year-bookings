@@ -3,7 +3,7 @@
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../../app.postcss';
 	import { page } from '$app/stores';
-	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 </script>
 
 <!-- App Shell -->
@@ -29,9 +29,7 @@
 				>
 			</svelte:fragment>
 
-			<svelte:fragment slot="trail">
-				<LightSwitch width="w-12" height="h-6" />
-			</svelte:fragment>
+			<svelte:fragment slot="trail" />
 		</AppBar>
 	</svelte:fragment>
 	<!-- Page Route Content -->

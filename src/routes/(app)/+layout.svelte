@@ -5,7 +5,7 @@
 	import IconAccountBoxOutline from '~icons/mdi/account-box-outline';
 	import '../../app.postcss';
 
-	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 	import YearButtons from '$lib/components/YearButtons.svelte';
 	import { year, isEditable } from '../../lib/stores/store';
 	import { scale } from 'svelte/transition';
