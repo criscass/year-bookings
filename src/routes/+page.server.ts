@@ -7,6 +7,9 @@ export const load: PageServerLoad = async (event) => {
 	if (session) {
 		throw redirect(302, '/calendar');
 	}
+	if (!session) {
+		throw redirect(302, '/login');
+	}
 	const bookings = getBookings();
 	return { bookings: bookings };
 };

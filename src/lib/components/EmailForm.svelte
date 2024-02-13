@@ -4,29 +4,29 @@
 
 	import { superForm } from 'sveltekit-superforms/client';
 
-	import IconAccountDetails from '~icons/mdi/card-account-details-outline';
+	import IconEmailDetails from '~icons/ic/baseline-alternate-email';
 	export let data: SuperValidated<ProfileSchema>;
 	const { form, errors, enhance } = superForm(data);
 </script>
 
 <section class="px-6 pt-16">
 	<div class="flex items-center font-semibold">
-		<IconAccountDetails style="font-size: 2rem;" />
-		<span class="ml-4">User Name</span>
+		<IconEmailDetails style="font-size: 2rem;" />
+		<span class="ml-4">Email</span>
 	</div>
-	<p class="text-sm mb-6">Change the user name associated with your account</p>
+	<p class="text-sm mb-6">Change the email associated with your account</p>
 	<!-- Personal Details Form -->
-	<form method="POST" action="?/updateProfile" use:enhance>
+	<form method="POST" action="?/updateEmail" use:enhance>
 		<input
-			type="text"
-			name="full_name"
+			type="email"
+			name="email"
 			class="input"
-			aria-label="Change your username"
-			bind:value={$form.full_name}
+			aria-label="Change your email"
+			bind:value={$form.email}
 		/>
-		{#if $errors.full_name}
+		{#if $errors.email}
 			<span class="block text-error-600 dark:text-error-500"
-				>{$errors.full_name}</span
+				>{$errors.email}</span
 			>
 		{/if}
 

@@ -22,9 +22,18 @@ devDependencies:
   '@iconify-json/carbon':
     specifier: ^1.1.29
     version: 1.1.29
+  '@iconify-json/ic':
+    specifier: ^1.1.17
+    version: 1.1.17
   '@iconify-json/mdi':
     specifier: ^1.1.64
     version: 1.1.64
+  '@iconify-json/tabler':
+    specifier: ^1.1.105
+    version: 1.1.105
+  '@iconify-json/wpf':
+    specifier: ^1.1.8
+    version: 1.1.8
   '@skeletonlabs/skeleton':
     specifier: ^1.12.0
     version: 1.12.0(svelte@4.2.9)
@@ -391,8 +400,26 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
+  /@iconify-json/ic@1.1.17:
+    resolution: {integrity: sha512-EvAjZzVESmN36zlyefylePUNaU2BQ3eRKVZ6KQSQ2bG01ppoZaiFZRri74VTyvp5Mlv2yn68ux1fgCoT+etGmA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify-json/mdi@1.1.64:
     resolution: {integrity: sha512-zGeo5TjhNFAY6FmSDBLAzDO811t77r6v/mDi7CAL9w5eXqKez6bIjk8R9AL/RHIeq44ALP4Ozr4lMqFTkHr7ug==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/tabler@1.1.105:
+    resolution: {integrity: sha512-USJbNfa0fAHBLilxTKn70wkvFnopmfcomfpqD0ul/69uyZnonztHhyrbM8MI9Ua4eYXaPymoB7tuZ+Ionx6xfg==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/wpf@1.1.8:
+    resolution: {integrity: sha512-vlsXlK+RHOwoIoR4k4I0Ed5zErTw+4oTX9OsJjPlE9Mrr1jHKADxQZdlAcC6i9Xvn8Ad875Ajj2Iwx6axWjqwg==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

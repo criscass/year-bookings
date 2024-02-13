@@ -45,9 +45,8 @@
 					>
 				{/if}
 				<a href="/account">
-					<IconAccountBoxOutline class="icon-box" />
+					<IconAccountBoxOutline class="icon-box hover:opacity-50" />
 				</a>
-				<!-- <LightSwitch width="w-12" height="h-6" /> -->
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
@@ -60,7 +59,7 @@
 	:global(.icon-box) {
 		font-size: 2rem;
 	}
-	:global(.icon-box):hover {
-		color: red;
-	}
+	/* :global(.icon-box):hover {
+		opacity: 50;
+	} */
 </style>
