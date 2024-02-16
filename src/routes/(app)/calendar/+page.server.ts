@@ -9,9 +9,20 @@ export const load: PageServerLoad = async (event) => {
 	if (!session) {
 		throw redirect(302, '/login');
 	}
+	async function getBookings() {
+		const { data: bookings, error: bookingsError } = await event.locals.supabase
+			.from('bookings')
+			.select('*');
+
+		if (bookingsError) {
+			throw error(500, 'Error fetching bookings, please try again later.');
+		}
+		return bookings;
+	}
 
 	return {
-		createBookingForm: await superValidate(createBookingSchema)
+		createBookingForm: await superValidate(createBookingSchema),
+		bookings: await getBookings()
 	};
 };
 

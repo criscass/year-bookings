@@ -22,8 +22,6 @@
 		$isEditable = !$isEditable;
 	}
 
-	console.log($errors._errors);
-
 	// let guestNameError = $errors.guest_name;
 </script>
 

@@ -16,60 +16,13 @@
 		surface: string;
 	}
 
-	import {
-		year,
-		isEditable,
-		checkInInputIsOnFocus,
-		checkOutInputIsOnFocus,
-		formStatus
-	} from '../stores/store';
+	import { year } from '../stores/store';
 
 	export let month = 0; //Jan
 
-	// - - - - props for today day higligthing  - - - -
-	// export const today: Date | null = null; // Todays Date
-	// export let today_day = 0;
-	// export let today_year = 0;
-	// export let today_month = 0;
-
 	export let data: PageData;
 
-	//   create table public.bookings(
-	//   id int primary key generated always as identity,
-	//   guest_name text not null,
-	//   startOnDay date not null,
-	//   endOnDay date not null,
-	//   color text not null,
-	//   created_at timestamptz default now(),
-	//   user_id uuid references auth.users(id) on delete cascade not null
-	// );
-
-	type Booking = {
-		id: number;
-		guest_name: string;
-		start_on_day: Date;
-		end_on_day: Date;
-		color: string;
-	};
-
-	type Bookings = Booking[];
-
-	const bookings: Bookings = [
-		{
-			id: 1,
-			guest_name: 'The greens',
-			start_on_day: new Date('2024-02-20'),
-			end_on_day: new Date('2024-02-25'),
-			color: 'primary'
-		},
-		{
-			id: 2,
-			guest_name: 'The browns',
-			start_on_day: new Date('2024-03-10'),
-			end_on_day: new Date('2024-03-15'),
-			color: 'secondary'
-		}
-	];
+	$: bookings = data.bookings;
 
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -94,30 +47,6 @@
 	$: prev = calendify(new Date($year, month - 1), bookings);
 	$: current = calendify(new Date($year, month), bookings);
 	$: next = calendify(new Date($year, month + 1), bookings);
-
-	// Returns true if year, month and day corrisponds to todays date
-	// function isToday(day: number) {
-	// 	return (
-	// 		today &&
-	// 		today_year === $year &&
-	// 		today_month === month &&
-	// 		today_day === day
-	// 	);
-	// }
-
-	// Updates the formStatus.startOnDay and formStatus.endOnDay
-	// store variables
-	function dayPicked(year: number, month: number, day: number) {
-		if ($checkInInputIsOnFocus) {
-			$formStatus.start_on_day = `${months[month]}/${day}/${year}`;
-
-			$checkInInputIsOnFocus = false;
-		}
-		if ($checkOutInputIsOnFocus) {
-			$formStatus.end_on_day = `${months[month]}/${day}/${year}`;
-			$checkOutInputIsOnFocus = false;
-		}
-	}
 </script>
 
 <div class="card variant-soft py-4 px-4">
@@ -139,12 +68,7 @@
 					<!-- It starts from the first day of the month, not printing the days of the week at the beginning or at
             the end of the month, those are in fact numbers and not objects, which belong to the previous or next month  -->
 
-					<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-					// Symplify this ↓ by getting startOnDay and endOnDay directly as
-					dates, from the value in the object and then converting it to locale format string in the form. -->
-
 					{#if typeof day === 'object'}
-						<!-- svelte-ignore a11y-no-static-element-interactions -->
 						<div>
 							<span>
 								{day.dayNumber}

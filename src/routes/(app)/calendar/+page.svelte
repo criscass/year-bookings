@@ -5,7 +5,6 @@
 	import EditSlideDrawer from '$lib/components/EditSlideDrawer.svelte';
 	import { slide } from 'svelte/transition';
 
-	import { onMount } from 'svelte';
 	const today = new Date();
 	const today_month = today && today.getMonth();
 	const today_year = today && today.getFullYear();

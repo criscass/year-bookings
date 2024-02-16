@@ -21,7 +21,14 @@ type Day =
 	  }
 	| number;
 
-export default function (target: Date, bookings: Bookings) {
+function getDateTimestamp(datestring: string) {
+	const dateObj = new Date(datestring);
+	dateObj.setHours(0, 0, 0, 0);
+
+	return dateObj.getTime();
+}
+
+export default function (target: Date, bookings: any) {
 	let i = 0;
 	let j = 0;
 	let week: (Day | number)[] = [];
@@ -29,6 +36,8 @@ export default function (target: Date, bookings: Bookings) {
 	const date = new Date(target || new Date());
 	const year = date.getFullYear();
 	const month = date.getMonth();
+
+	// get the timestamp disregarding the time of the day, to avoid timezone problems
 
 	// day index (of week) for 1st of month
 	// 0 = sunday ...and 6 = saturday
@@ -46,12 +55,17 @@ export default function (target: Date, bookings: Bookings) {
 			} else {
 				// todayBookings would rappresent the eventual bookings for the day
 				// if there is no booking it's an empty []
-				const today = new Date(year, month, i);
-				const todayBookings: Booking[] = bookings.filter(
-					(booking) =>
-						booking.start_on_day.valueOf() <= today.valueOf() &&
-						today.valueOf() <= booking.end_on_day.valueOf()
-				);
+				const today = getDateTimestamp(`${year}-${month + 1}-${i}`);
+
+				const todayBookings = bookings.filter((booking: any) => {
+					const start = getDateTimestamp(booking.start_on_day);
+					const end = getDateTimestamp(booking.end_on_day);
+
+					return (
+						start.valueOf() <= today.valueOf() &&
+						today.valueOf() <= end.valueOf()
+					);
+				});
 
 				if (todayBookings.length === 1) {
 					week[j++] = {
