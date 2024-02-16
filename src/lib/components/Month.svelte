@@ -34,7 +34,42 @@
 
 	export let data: PageData;
 
-	$: bookings = data.bookings;
+	//   create table public.bookings(
+	//   id int primary key generated always as identity,
+	//   guest_name text not null,
+	//   startOnDay date not null,
+	//   endOnDay date not null,
+	//   color text not null,
+	//   created_at timestamptz default now(),
+	//   user_id uuid references auth.users(id) on delete cascade not null
+	// );
+
+	type Booking = {
+		id: number;
+		guest_name: string;
+		start_on_day: Date;
+		end_on_day: Date;
+		color: string;
+	};
+
+	type Bookings = Booking[];
+
+	const bookings: Bookings = [
+		{
+			id: 1,
+			guest_name: 'The greens',
+			start_on_day: new Date('2024-02-20'),
+			end_on_day: new Date('2024-02-25'),
+			color: 'primary'
+		},
+		{
+			id: 2,
+			guest_name: 'The browns',
+			start_on_day: new Date('2024-03-10'),
+			end_on_day: new Date('2024-03-15'),
+			color: 'secondary'
+		}
+	];
 
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -74,47 +109,15 @@
 	// store variables
 	function dayPicked(year: number, month: number, day: number) {
 		if ($checkInInputIsOnFocus) {
-			$formStatus.startOnDay = `${months[month]}/${day}/${year}`;
+			$formStatus.start_on_day = `${months[month]}/${day}/${year}`;
 
 			$checkInInputIsOnFocus = false;
 		}
 		if ($checkOutInputIsOnFocus) {
-			$formStatus.endOnDay = `${months[month]}/${day}/${year}`;
+			$formStatus.end_on_day = `${months[month]}/${day}/${year}`;
 			$checkOutInputIsOnFocus = false;
 		}
 	}
-
-	// Updates the store values, only on booked days, and runs the dayPicked function for all days
-
-	const options = {
-		weekday: 'narrow',
-		year: 'numeric',
-		month: 'long',
-		day: 'numeric'
-	};
-
-	function handleClicks(
-		year: number,
-		month: number,
-		dayNumber: number,
-		isBooked: boolean,
-		name?: string,
-		startOnDay?: Date,
-		endOnDay?: Date
-	) {
-		$isEditable ? dayPicked(year, month, dayNumber) : null;
-
-		isBooked ? ($isEditable = true) : null;
-		if (isBooked) {
-			$formStatus.name = name;
-			startOnDay && ($formStatus.startOnDay = startOnDay.toLocaleDateString());
-			endOnDay && ($formStatus.endOnDay = endOnDay.toLocaleDateString());
-		}
-	}
-
-	// onMount(() => {
-	// 	console.log(current);
-	// });
 </script>
 
 <div class="card variant-soft py-4 px-4">
@@ -133,38 +136,16 @@
 				{#each { length: 7 } as _, idxd (idxd)}
 					{@const day = current[idxw][idxd]}
 
-					<!-- It starts from the first day of the month, not printing the days of the week at the beginning or at the end of the month, those are in fact numbers and not objects, which belong to the previous or next month  -->
+					<!-- It starts from the first day of the month, not printing the days of the week at the beginning or at
+            the end of the month, those are in fact numbers and not objects, which belong to the previous or next month  -->
 
-					<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+					<!-- ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 					// Symplify this ↓ by getting startOnDay and endOnDay directly as
 					dates, from the value in the object and then converting it to locale format string in the form. -->
 
 					{#if typeof day === 'object'}
-						<div
-							on:click={() => {
-								handleClicks(
-									$year,
-									month,
-									day.dayNumber,
-									day.isBooked,
-									day.name1,
-									day.startOnDay,
-									day.endOnDay
-								);
-							}}
-							on:keydown={() => {
-								handleClicks(
-									$year,
-									month,
-									day.dayNumber,
-									day.isBooked,
-									day.name1,
-									day.startOnDay,
-									day.endOnDay
-								);
-							}}
-							class:day={$isEditable || day.isBooked}
-						>
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<div>
 							<span>
 								{day.dayNumber}
 							</span>
@@ -199,11 +180,4 @@
 </div>
 
 <style>
-	.day {
-		cursor: pointer;
-	}
-	.day:hover {
-		transform: scale(1.2);
-		color: white;
-	}
 </style>

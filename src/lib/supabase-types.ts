@@ -38,28 +38,39 @@ export interface Database {
 				Row: {
 					color: string;
 					created_at: string | null;
-					endonday: string;
+					end_on_day: string;
 					guest_name: string;
 					id: number;
-					startonday: string;
+					start_on_day: string;
+					user_id: string;
 				};
 				Insert: {
 					color: string;
 					created_at?: string | null;
-					endonday: string;
+					end_on_day: string;
 					guest_name: string;
 					id?: never;
-					startonday: string;
+					start_on_day: string;
+					user_id: string;
 				};
 				Update: {
 					color?: string;
 					created_at?: string | null;
-					endonday?: string;
+					end_on_day?: string;
 					guest_name?: string;
 					id?: never;
-					startonday?: string;
+					start_on_day?: string;
+					user_id?: string;
 				};
-				Relationships: [];
+				Relationships: [
+					{
+						foreignKeyName: 'bookings_user_id_fkey';
+						columns: ['user_id'];
+						isOneToOne: false;
+						referencedRelation: 'users';
+						referencedColumns: ['id'];
+					}
+				];
 			};
 			profiles: {
 				Row: {

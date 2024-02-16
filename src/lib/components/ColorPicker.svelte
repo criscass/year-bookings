@@ -1,23 +1,23 @@
 <script lang="ts">
 	// import { onMount } from 'svelte';
-	import { borderColor } from '../stores/store';
+	import { border_color } from '../stores/store';
 
 	let active = '';
 
 	function handleClick(e: any) {
 		active = e.target.id;
-		$borderColor = e.target.id;
+		$border_color = e.target.id;
 	}
 </script>
 
 <div class="mt-2 p-2 rounded-lg">
 	<!-- palette-of-colors -->
-	<div class=" whitespace-nowrap overflow-x-auto ">
+	<div class=" whitespace-nowrap overflow-x-auto">
 		<!-- single color -->
 		<button
 			id="secondary"
 			type="button"
-			class="inline-block mr-2 rounded-full bg-secondary-500 w-10 h-10  transition-all"
+			class="inline-block mr-2 rounded-full bg-secondary-500 w-10 h-10 transition-all"
 			on:click={(e) => handleClick(e)}
 			class:is-selected={active === 'secondary'}
 		/>

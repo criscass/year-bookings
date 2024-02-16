@@ -8,7 +8,20 @@
 // and booked days
 //*************************************************************/
 
-export default function (target: Date, bookings: Booking[]) {
+type Day =
+	| {
+			dayNumber: number;
+			color1?: string;
+			color2?: string;
+			isBooked: boolean;
+			name1?: string;
+			name2?: string;
+			start_on_day?: Date;
+			end_on_day?: Date;
+	  }
+	| number;
+
+export default function (target: Date, bookings: Bookings) {
 	let i = 0;
 	let j = 0;
 	let week: (Day | number)[] = [];
@@ -36,17 +49,18 @@ export default function (target: Date, bookings: Booking[]) {
 				const today = new Date(year, month, i);
 				const todayBookings: Booking[] = bookings.filter(
 					(booking) =>
-						booking.startOnDay.valueOf() <= today.valueOf() &&
-						today.valueOf() <= booking.endOnDay.valueOf()
+						booking.start_on_day.valueOf() <= today.valueOf() &&
+						today.valueOf() <= booking.end_on_day.valueOf()
 				);
+
 				if (todayBookings.length === 1) {
 					week[j++] = {
 						dayNumber: i,
 						color1: todayBookings[0].color,
 						isBooked: true,
 						name1: todayBookings[0].name,
-						startOnDay: todayBookings[0].startOnDay,
-						endOnDay: todayBookings[0].endOnDay
+						start_on_day: todayBookings[0].start_on_day,
+						end_on_day: todayBookings[0].end_on_day
 					};
 				} else if (todayBookings.length === 2) {
 					week[j++] = {
@@ -56,8 +70,8 @@ export default function (target: Date, bookings: Booking[]) {
 						isBooked: true,
 						name1: todayBookings[0].name,
 						name2: todayBookings[1].name,
-						startOnDay: todayBookings[0].startOnDay,
-						endOnDay: todayBookings[0].endOnDay
+						start_on_day: todayBookings[0].start_on_day,
+						end_on_day: todayBookings[0].end_on_day
 					};
 				} else {
 					week[j++] = {

@@ -1,28 +1,50 @@
-import { getBookings, addBooking } from '../../../lib/server/database';
-import type { Actions, PageServerLoad } from '../../$types';
+import { error, fail, redirect } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
+import { setError, superValidate } from 'sveltekit-superforms/client';
+import { createBookingSchema } from '$lib/schemas';
+import { supabaseAdmin } from '$lib/server/supabase-admin';
 
-export const load: PageServerLoad = async () => {
-	const bookings = getBookings();
-	return { bookings: bookings };
+export const load: PageServerLoad = async (event) => {
+	const session = await event.locals.getSession();
+	if (!session) {
+		throw redirect(302, '/login');
+	}
+
+	return {
+		createBookingForm: await superValidate(createBookingSchema)
+	};
 };
 
 export const actions: Actions = {
-	default: async ({ request }) => {
-		const data = await request.formData();
-		const bookingName = String(data.get('bookingName'));
-		const checkInDate = String(data.get('check-in'));
-		const checkOutDate = String(data.get('check-out'));
-		const bookingColor = String(data.get('bookingColor'));
-		const newBooking: Booking = {
-			id: crypto.randomUUID(),
-			name: bookingName,
-			startOnDay: new Date(checkInDate),
-			endOnDay: new Date(checkOutDate),
-			color: bookingColor
+	createBooking: async (event) => {
+		const session = await event.locals.getSession();
+		if (!session) {
+			throw error(401, 'Unauthorized');
+		}
+
+		const createBookingForm = await superValidate(event, createBookingSchema);
+		console.log('createBookingForm.data :', createBookingForm.data);
+
+		if (!createBookingForm.valid) {
+			return fail(400, {
+				createBookingForm
+			});
+		}
+
+		const { error: createBookingError } = await supabaseAdmin
+			.from('bookings')
+			.insert({
+				...createBookingForm.data,
+				user_id: session.user.id
+			});
+
+		if (createBookingError) {
+			console.log(createBookingError);
+			return setError(createBookingForm, null, 'Error creating contact.');
+		}
+
+		return {
+			createBookingForm
 		};
-
-		addBooking(newBooking);
-
-		return { success: true };
 	}
 };

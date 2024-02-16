@@ -24,8 +24,8 @@ export const actions: Actions = {
 		const newBooking: Booking = {
 			id: crypto.randomUUID(),
 			name: bookingName,
-			startOnDay: new Date(checkInDate),
-			endOnDay: new Date(checkOutDate),
+			start_on_day: new Date(checkInDate),
+			end_on_day: new Date(checkOutDate),
 			color: bookingColor
 		};
 

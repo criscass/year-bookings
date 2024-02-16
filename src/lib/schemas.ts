@@ -1,13 +1,5 @@
 import { z } from 'zod';
 
-// export const BookingSchema = z.object({
-// 	bookingName: z.string(),
-// 	checkIn: z.string(),
-// 	checkOut: z.string(),
-// 	bookingColor: z.string()
-// });
-// export type BookingSchema = typeof BookingSchema;
-
 /**
  * Register Form Schema
  */
@@ -58,4 +50,18 @@ export const loginUserSchema = z.object({
 	email: z.string().email('Please enter a valid email address'),
 	password: z.string().min(1, 'Please enter a password')
 });
-export type loginUserSchema = typeof loginUserSchema;
+export type LoginUserSchema = typeof loginUserSchema;
+
+/**
+ * Create Booking Form Schema
+ */
+export const createBookingSchema = z.object({
+	guest_name: z
+		.string()
+		.min(2, 'The guest name should be at least 2 characters')
+		.max(28, 'The guest name cannot exceed 28 characters'),
+	start_on_day: z.string().min(1, 'Please enter a check-in date'),
+	end_on_day: z.string().min(1, 'Please enter a check-out date'),
+	color: z.string().min(1, 'Please choose a color')
+});
+export type CreateBookingSchema = typeof createBookingSchema;

@@ -4,7 +4,7 @@
 		isEditable,
 		checkInInputIsOnFocus,
 		checkOutInputIsOnFocus,
-		borderColor,
+		border-color,
 		formStatus
 	} from '../../lib/stores/store';
 	import type { PageData } from '../../routes/$types';
@@ -32,7 +32,7 @@
 		>
 	</h3>
 	<h3 class="mt-4">
-		borderColor:<span class="text-red-600 mx-4">{$borderColor}</span>
+		borderColor:<span class="text-red-600 mx-4">{$border - color}</span>
 	</h3>
 	<div class="p-4 mt-8">
 		<h2>formStatus</h2>
@@ -43,12 +43,12 @@
 			</h3>
 			<h3 class="mt-4">
 				formStatus.startOnDay:<span class="text-red-600 mx-4"
-					>{$formStatus.startOnDay}</span
+					>{$formStatus.start_on_day}</span
 				>
 			</h3>
 			<h3 class="mt-4">
 				formStatus.endOnDay:<span class="text-red-600 mx-4"
-					>{$formStatus.endOnDay}</span
+					>{$formStatus.end_on_day}</span
 				>
 			</h3>
 			<h3 class="mt-4">

@@ -1,8 +1,8 @@
 create table public.bookings(
   id int primary key generated always as identity,
   guest_name text not null,
-  startOnDay date not null,
-  endOnDay date not null,
+  start_on_day date not null,
+  end_on_day date not null,
   color text not null,
   created_at timestamptz default now(),
   user_id uuid references auth.users(id) on delete cascade not null
