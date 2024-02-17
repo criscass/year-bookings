@@ -43,6 +43,10 @@
 		surface: 'border-b-4 border-surface-500'
 	};
 
+	function openPopup() {
+		console.log('open');
+	}
+
 	// Month array for prev, current and next month
 	$: prev = calendify(new Date($year, month - 1), bookings);
 	$: current = calendify(new Date($year, month), bookings);
@@ -68,9 +72,9 @@
 					<!-- It starts from the first day of the month, not printing the days of the week at the beginning or at
             the end of the month, those are in fact numbers and not objects, which belong to the previous or next month  -->
 
-					{#if typeof day === 'object'}
-						<div>
-							<span>
+					{#if (typeof day === 'object' && day.color2) || (typeof day === 'object' && day.color1)}
+						<button on:click={() => openPopup()}>
+							<span class="text-lg font-normal">
 								{day.dayNumber}
 							</span>
 							{#if day.color2}
@@ -82,9 +86,15 @@
 								<div
 									class={day.color1 === ''
 										? ''
-										: `${borderColor[`${day.color1}`]}`}
+										: `${borderColor[`${day.color1}`]} `}
 								/>
 							{/if}
+						</button>
+					{:else if typeof day === 'object'}
+						<div>
+							<span class="text-lg font-normal">
+								{day.dayNumber}
+							</span>
 						</div>
 					{:else if idxw < 1}
 						{@const prevDay = prev[prev.length - 1][idxd]}
@@ -102,6 +112,3 @@
 		{/each}
 	</section>
 </div>
-
-<style>
-</style>

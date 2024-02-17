@@ -4,11 +4,10 @@
 	import type { PageData } from './$types';
 	import EditSlideDrawer from '$lib/components/EditSlideDrawer.svelte';
 	import { slide } from 'svelte/transition';
-
+	import { popup } from '@skeletonlabs/skeleton';
+	import type { PopupSettings } from '@skeletonlabs/skeleton';
 	const today = new Date();
-	const today_month = today && today.getMonth();
-	const today_year = today && today.getFullYear();
-	const today_day = today && today.getDate();
+
 	export let data: PageData;
 </script>
 

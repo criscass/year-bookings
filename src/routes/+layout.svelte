@@ -8,6 +8,17 @@
 	import { onMount } from 'svelte';
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 	import { invalidate } from '$app/navigation';
+	import {
+		computePosition,
+		autoUpdate,
+		offset,
+		shift,
+		flip,
+		arrow
+	} from '@floating-ui/dom';
+
+	import { storePopup } from '@skeletonlabs/skeleton';
+	storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
 
 	//Rather use stripe then this client side supabase client
 	export let data: LayoutData;
