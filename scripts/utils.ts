@@ -2,7 +2,7 @@ import detect from 'detect-port';
 import { execSync } from 'child_process';
 import pg from 'pg';
 import { ENV } from '$lib/server/env';
-import { createClient } from '@supabase/supabase-js';
+import { supabaseAdmin } from '$lib/server/supabase-admin';
 import type { Database } from '$lib/supabase-types';
 import type { z } from 'zod';
 import type { registerUserSchema } from '$lib/schemas.ts';
@@ -24,15 +24,10 @@ export async function clearSupabaseData() {
 	await client.query('TRUNCATE auth.users CASCADE');
 }
 
-const supabase = createClient<Database>(
-	ENV.PUBLIC_SUPABASE_URL,
-	ENV.PUBLIC_SUPABASE_ANON_KEY
-);
-
 type CreateUser = Omit<z.infer<typeof registerUserSchema>, 'password_confirm'>;
 
 export async function createUser(user: CreateUser) {
-	const { data: authData, error: authError } = await supabase.auth.signUp({
+	const { data: authData, error: authError } = await supabaseAdmin.auth.signUp({
 		email: user.email,
 		password: user.password,
 		options: {

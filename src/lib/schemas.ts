@@ -80,3 +80,12 @@ export const editBookingSchema = z.object({
 	color: z.string().min(1, 'Please choose a color')
 });
 export type EditBookingSchema = typeof editBookingSchema;
+
+/**
+ * Delete Booking Form Schema
+ */
+export const deleteBookingSchema = z.object({
+	delete_booking_id: z.string()
+});
+
+export type DeleteBookingSchema = typeof deleteBookingSchema;

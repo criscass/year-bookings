@@ -114,20 +114,4 @@
 </form>
 
 <style>
-	input[type='date']:before {
-		content: attr(placeholder) !important;
-		color: #6466f1;
-		margin-right: 0.5em;
-	}
-	input[type='date']:focus:before,
-	input[type='date']:valid:before {
-		content: '';
-	}
-
-	input::placeholder {
-		color: #6466f1;
-	}
-	.error_message input::placeholder {
-		color: red !important;
-	}
 </style>

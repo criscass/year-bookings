@@ -97,6 +97,7 @@
 		color: string,
 		id: number
 	) {
+		$isEditable = false;
 		$formStatus.name = name;
 		$formStatus.start_on_day = start_on_day;
 		$formStatus.end_on_day = end_on_day;
@@ -154,6 +155,7 @@
 										)}
 									</p>
 									<a
+										role="button"
 										class="btn variant-soft w-full mt-4"
 										on:click={() =>
 											handleEditClick(
