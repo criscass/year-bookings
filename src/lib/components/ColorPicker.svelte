@@ -1,12 +1,12 @@
 <script lang="ts">
 	// import { onMount } from 'svelte';
-	import { border_color } from '../stores/store';
+	import { borderColor } from '../stores/store';
 
-	let active = '';
+	let active = $borderColor;
 
 	function handleClick(e: any) {
 		active = e.target.id;
-		$border_color = e.target.id;
+		$borderColor = e.target.id;
 	}
 </script>
 
@@ -84,6 +84,7 @@
 	.is-selected {
 		animation: wobble 0.5s ease-in-out;
 		border-radius: 1px;
+		border: solid 2px white;
 	}
 
 	@keyframes wobble {

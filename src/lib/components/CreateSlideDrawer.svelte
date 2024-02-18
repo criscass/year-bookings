@@ -1,52 +1,38 @@
 <script lang="ts">
 	import type { CreateBookingSchema } from '$lib/schemas';
 	import type { SuperValidated } from 'sveltekit-superforms';
-	import { isEditable2, borderColor, formStatus } from '../stores/store';
+	import { isEditable, borderColor } from '../stores/store';
 
 	import ColorPicker from './ColorPicker.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
-	import { onMount } from 'svelte';
 
 	export let data: SuperValidated<CreateBookingSchema>;
 	const { form, errors, enhance } = superForm(data, {
 		resetForm: true,
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
-				$isEditable2 = false;
+				$isEditable = false;
+				$borderColor = '';
 				return;
 			}
 		}
 	});
 
 	function closeDrawer() {
-		$isEditable2 = !$isEditable2;
+		$isEditable = !$isEditable;
 	}
 
-	// it scrolls all the way to the top so that the drawer becomes visible
-	let topDiv: any;
-	function scrollToTop() {
-		topDiv.scrollIntoView({
-			behavior: 'smooth',
-			block: 'start',
-			inline: 'nearest'
-		});
-	}
-
-	onMount(() => {
-		scrollToTop();
-	});
+	// let guestNameError = $errors.guest_name;
 </script>
-
-<div bind:this={topDiv} class="absolute top-0 left-0" />
 
 <form
 	method="POST"
-	action="?/updateBooking"
+	action="?/createBooking"
 	class="grid grid-cols-12 gap-4 p-4 backdrop-blur-md max-w-screen"
 	use:enhance
 >
-	<input type="hidden" name="booking_id" bind:value={$formStatus.booking_id} />
 	<!-- Booking name -->
+
 	<div class="col-span-11">
 		<input
 			type="text"
@@ -54,7 +40,7 @@
 			placeholder={'Guest Name'}
 			autocomplete="off"
 			class="input"
-			bind:value={$formStatus.name}
+			bind:value={$form.guest_name}
 		/>
 		{#if $errors.guest_name}
 			<span class="block text-error-600 dark:text-error-500"
@@ -80,7 +66,7 @@
 			placeholder="check-in date"
 			class="input"
 			inputmode="none"
-			bind:value={$formStatus.start_on_day}
+			bind:value={$form.start_on_day}
 		/>
 		{#if $errors.start_on_day}
 			<span class="block text-error-600 dark:text-error-500"
@@ -97,7 +83,7 @@
 			autocomplete="off"
 			class="input"
 			inputmode="none"
-			bind:value={$formStatus.end_on_day}
+			bind:value={$form.end_on_day}
 		/>
 		{#if $errors.end_on_day}
 			<span class="block text-error-600 dark:text-error-500"

@@ -65,3 +65,18 @@ export const createBookingSchema = z.object({
 	color: z.string().min(1, 'Please choose a color')
 });
 export type CreateBookingSchema = typeof createBookingSchema;
+
+/**
+ * Edit Booking Form Schema
+ */
+export const editBookingSchema = z.object({
+	booking_id: z.number(),
+	guest_name: z
+		.string()
+		.min(2, 'The guest name should be at least 2 characters')
+		.max(28, 'The guest name cannot exceed 28 characters'),
+	start_on_day: z.string().min(1, 'Please enter a check-in date'),
+	end_on_day: z.string().min(1, 'Please enter a check-out date'),
+	color: z.string().min(1, 'Please choose a color')
+});
+export type EditBookingSchema = typeof editBookingSchema;
