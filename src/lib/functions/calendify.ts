@@ -16,8 +16,10 @@ type Day =
 			isBooked: boolean;
 			name1?: string;
 			name2?: string;
-			start_on_day?: Date;
-			end_on_day?: Date;
+			start_on_day?: string;
+			end_on_day?: string;
+			booking_id?: number;
+			booking_id2?: number;
 	  }
 	| number;
 
@@ -72,9 +74,10 @@ export default function (target: Date, bookings: any) {
 						dayNumber: i,
 						color1: todayBookings[0].color,
 						isBooked: true,
-						name1: todayBookings[0].name,
+						name1: todayBookings[0].guest_name,
 						start_on_day: todayBookings[0].start_on_day,
-						end_on_day: todayBookings[0].end_on_day
+						end_on_day: todayBookings[0].end_on_day,
+						booking_id: todayBookings[0].id
 					};
 				} else if (todayBookings.length === 2) {
 					week[j++] = {
@@ -82,10 +85,12 @@ export default function (target: Date, bookings: any) {
 						color1: todayBookings[0].color,
 						color2: todayBookings[1].color,
 						isBooked: true,
-						name1: todayBookings[0].name,
-						name2: todayBookings[1].name,
+						name1: todayBookings[0].guest_name,
+						name2: todayBookings[1].guest_name,
 						start_on_day: todayBookings[0].start_on_day,
-						end_on_day: todayBookings[0].end_on_day
+						end_on_day: todayBookings[0].end_on_day,
+						booking_id: todayBookings[0].id,
+						booking_id2: todayBookings[1].id
 					};
 				} else {
 					week[j++] = {

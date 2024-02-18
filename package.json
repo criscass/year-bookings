@@ -14,6 +14,7 @@
     "seed": "tsx --tsconfig scripts/tsconfig.json scripts/seed.ts"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@iconify-json/carbon": "^1.1.29",
     "@iconify-json/ic": "^1.1.17",
     "@iconify-json/mdi": "^1.1.64",
