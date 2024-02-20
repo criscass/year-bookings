@@ -9,7 +9,6 @@
 	} from '../stores/store';
 
 	import { onMount } from 'svelte';
-	import { popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
 	const popupFeatured: PopupSettings = {
@@ -41,6 +40,8 @@
 	export let data: PageData;
 
 	$: bookings = data.bookings;
+
+	let tooltipMessage: string = '';
 
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -135,41 +136,8 @@
             the end of the month, those are in fact numbers and not objects, which belong to the previous or next month  -->
 
 					{#if (typeof day === 'object' && day.color2) || (typeof day === 'object' && day.color1)}
-						<button
-							use:popup={{
-								event: 'click',
-								target: 'loopExample-' + day.name1,
-								placement: 'top'
-							}}
-						>
-							<!-- Infos Popup -->
-							<div
-								class="card p-6 w-72 shadow-xl"
-								data-popup="loopExample-{day.name1}"
-							>
-								<div>
-									<p class="my-4">{day.name1}</p>
-									<p class="text-sm mb-5">
-										{formatDateString(day.start_on_day)} to {formatDateString(
-											day.end_on_day
-										)}
-									</p>
-									<a
-										role="button"
-										class="btn variant-soft w-full mt-4"
-										on:click={() =>
-											handleEditClick(
-												day.name1,
-												day.start_on_day,
-												day.end_on_day,
-												day.color1,
-												day.booking_id
-											)}>Edit</a
-									>
-								</div>
-
-								<div class="arrow bg-surface-100-800-token" />
-							</div>
+						<!-- Infos Tooltip -->
+						<div class="booked-day" data-tooltip={day.name1}>
 							<span class="text-lg font-normal">
 								{day.dayNumber}
 							</span>
@@ -185,7 +153,7 @@
 										: `${borderColorString[`${day.color1}`]} `}
 								/>
 							{/if}
-						</button>
+						</div>
 					{:else if typeof day === 'object'}
 						<div>
 							<span class="text-lg font-normal">
@@ -208,3 +176,50 @@
 		{/each}
 	</section>
 </div>
+
+<style>
+	.booked-day {
+		position: relative;
+	}
+
+	.booked-day::before,
+	.booked-day::after {
+		--scale: 0;
+		--arrow-size: 10px;
+		--tooltip-color: #333;
+		position: absolute;
+
+		top: -0.25rem;
+		left: 50%;
+		transform: translateX(-50%) translateY(var(--translate-y, 0))
+			scale(var(--scale));
+		transition: 50ms transform;
+		transform-origin: bottom center;
+	}
+
+	.booked-day::before {
+		--translate-y: calc(-100% - var(--arrow-size));
+		content: attr(data-tooltip);
+		color: white;
+		padding: 0.5rem;
+		width: max-content;
+		background: var(--tooltip-color);
+		border-radius: 0.3rem;
+		text-align: center;
+	}
+
+	.booked-day:hover::before,
+	.booked-day:hover::after {
+		--scale: 1;
+		scale: var(--scale);
+	}
+
+	.booked-day::after {
+		--translate-y: calc(-1 * var(--arrow-size));
+
+		content: '';
+		border: var(--arrow-size) solid transparent;
+		border-top-color: var(--tooltip-color);
+		transform-origin: top center;
+	}
+</style>
