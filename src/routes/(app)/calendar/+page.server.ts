@@ -24,11 +24,23 @@ export const load: PageServerLoad = async (event) => {
 		return bookings;
 	}
 
+	async function getUserProfile() {
+		const { data: profile, error: profileError } = await event.locals.supabase
+			.from('profiles')
+			.select('*');
+
+		if (profileError) {
+			throw error(500, 'Error fetching bookings, please try again later.');
+		}
+		return profile;
+	}
+
 	return {
 		createBookingForm: await superValidate(createBookingSchema, {
 			id: 'create'
 		}),
 		bookings: await getBookings(),
+		profile: await getUserProfile(),
 		deleteBookingForm: await superValidate(deleteBookingSchema, {
 			id: 'delete'
 		}),

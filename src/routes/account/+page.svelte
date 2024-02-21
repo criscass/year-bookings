@@ -4,9 +4,12 @@
 	import ProfileForm from '$lib/components/ProfileForm.svelte';
 	import EmailForm from '$lib/components/EmailForm.svelte';
 	import PasswordForm from '$lib/components/PasswordForm.svelte';
-
+	import { user_name } from '$lib/stores/store';
 	import IconBackArrow from '~icons/tabler/arrow-back-up';
+
 	export let data: PageData;
+
+	// $user_name = data.profileForm.
 </script>
 
 <a href="/calendar">

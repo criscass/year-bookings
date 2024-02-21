@@ -186,7 +186,7 @@
 	.booked-day::after {
 		--scale: 0;
 		--arrow-size: 10px;
-		--tooltip-color: #333;
+		--tooltip-color: #5052c7;
 		position: absolute;
 
 		top: -0.25rem;

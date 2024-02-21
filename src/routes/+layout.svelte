@@ -19,6 +19,7 @@
 				invalidate('supabase:auth');
 			}
 		});
+
 		return () => subscription.unsubscribe();
 	});
 </script>

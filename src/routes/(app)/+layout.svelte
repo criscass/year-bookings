@@ -7,12 +7,10 @@
 
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 	import YearButtons from '$lib/components/YearButtons.svelte';
-	import { year, isEditable, isEditable2 } from '../../lib/stores/store';
+	import { year, isEditable, isEditable2, user_name } from '$lib/stores/store';
 	import { scale } from 'svelte/transition';
-
-	import type { LayoutData } from './$types';
-
-	export let data: LayoutData;
+	import type { PageData } from '../$types';
+	export let data: PageData;
 
 	function prevYear() {
 		$year = $year - 1;
@@ -25,8 +23,6 @@
 		$isEditable2 = false;
 		$isEditable = !$isEditable;
 	}
-
-	let user_name = data.session.user.user_metadata.full_name;
 </script>
 
 <!-- App Shell -->
@@ -40,7 +36,7 @@
 			slotTrail="place-content-end"
 		>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl ml-5">{user_name}</strong>
+				<strong class="text-xl ml-5">{$user_name}</strong>
 			</svelte:fragment>
 
 			<YearButtons on:prevYear={prevYear} on:nextYear={nextYear} />

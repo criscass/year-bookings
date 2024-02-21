@@ -10,6 +10,8 @@ export let checkOutInputIsOnFocus = writable(false);
 
 export let borderColor = writable<string>('');
 
+export let user_name = writable<string>('');
+
 export let formStatus = writable({
 	name: '',
 	start_on_day: '',

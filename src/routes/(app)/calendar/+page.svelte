@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { isEditable, isEditable2 } from '$lib/stores/store';
+	import { isEditable, isEditable2, user_name } from '$lib/stores/store';
 	import Month from '$lib/components/Month.svelte';
 	import type { PageData } from './$types';
 	import CreateSlideDrawer from '$lib/components/CreateSlideDrawer.svelte';
@@ -10,6 +10,8 @@
 	const today = new Date();
 
 	export let data: PageData;
+
+	$user_name = data.profile[0].full_name;
 </script>
 
 {#if $isEditable}
