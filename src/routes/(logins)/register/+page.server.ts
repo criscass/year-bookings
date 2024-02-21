@@ -40,8 +40,6 @@ export const actions: Actions = {
 			return setError(form, null, 'An error occurred while registering.');
 		}
 
-		return {
-			form
-		};
+		redirect(302, '/check_email');
 	}
 };

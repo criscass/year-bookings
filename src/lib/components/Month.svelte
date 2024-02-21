@@ -141,6 +141,7 @@
 							<span class="text-lg font-normal">
 								{day.dayNumber}
 							</span>
+
 							{#if day.color2}
 								<div class="grid grid-cols-2">
 									<div class={`${borderColorString[`${day.color2}`]}`} />

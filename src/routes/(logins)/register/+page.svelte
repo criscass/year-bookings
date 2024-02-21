@@ -3,35 +3,12 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	// import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
 	export let data: PageData;
-	const { form, errors, enhance } = superForm(
-		data.form,
-		{
-			resetForm: true
-		}
-		// {
-		// 	resetForm: true,
-		// 	onResult: ({ result }) => {
-		// 		switch (result.type) {
-		// 			case 'success':
-		// 				toast.success('Success! Confirm your email to login.');
-		// 				break;
-		// 			case 'error':
-		// 				toast.error('Error creating your account!');
-		// 				break;
-		// 			case 'failure':
-		// 				toast.error('Check your details and try again!');
-		// 				break;
-		// 			default:
-		// 				return;
-		// 		}
-		// 		return;
-		// 	}
-		// }
-	);
+	const { form, errors, enhance } = superForm(data.form, {
+		resetForm: true
+	});
 </script>
 
 <h3>Register a new account</h3>
-<!-- <SuperDebug data={form} /> -->
 <form method="POST" use:enhance>
 	<div class="card p-4 mt-5 w-full text-token space-y-4">
 		<label class="label">
