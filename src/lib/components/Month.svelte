@@ -30,10 +30,10 @@
 		warning: string;
 		error: string;
 		surface: string;
+		[key: string]: string;
 	}
 
 	import { year } from '../stores/store';
-	import { redirect } from '@sveltejs/kit';
 
 	export let month = 0; //Jan
 
@@ -112,7 +112,7 @@
 	$: current = calendify(new Date($year, month), bookings);
 	$: next = calendify(new Date($year, month + 1), bookings);
 	// onMount(() => {
-	// 	console.log('bookings: ', bookings);
+	// 	console.log('current): ', current);
 	// });
 </script>
 
@@ -182,7 +182,6 @@
 	.booked-day {
 		position: relative;
 	}
-
 	.booked-day::before,
 	.booked-day::after {
 		--scale: 0;
@@ -217,7 +216,6 @@
 
 	.booked-day::after {
 		--translate-y: calc(-1 * var(--arrow-size));
-
 		content: '';
 		border: var(--arrow-size) solid transparent;
 		border-top-color: var(--tooltip-color);
