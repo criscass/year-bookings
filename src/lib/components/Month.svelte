@@ -41,8 +41,6 @@
 
 	$: bookings = data.bookings;
 
-	let tooltipMessage: string = '';
-
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 	// prettier-ignore
@@ -61,21 +59,6 @@
 		error: 'border-b-4 border-error-500',
 		surface: 'border-b-4 border-surface-500'
 	};
-
-	// Turns a date object into a formatted string
-	function formatDateString(dateString: string) {
-		const dateObj = new Date(dateString);
-
-		if (isNaN(dateObj.getTime())) {
-			return 'Invalid Date';
-		}
-
-		const monthOptions: Intl.DateTimeFormatOptions = { month: 'short' };
-		const monthName = dateObj.toLocaleDateString('en-US', monthOptions);
-		const day = dateObj.getDate() + getDayOrdinalSuffix(dateObj.getDate());
-
-		return `${monthName} ${day}`;
-	}
 
 	// Helper function to get the ordinal suffix
 	function getDayOrdinalSuffix(day: number) {
@@ -144,8 +127,8 @@
 
 							{#if day.color2}
 								<div class="grid grid-cols-2">
-									<div class={`${borderColorString[`${day.color2}`]}`} />
 									<div class={`${borderColorString[`${day.color1}`]}`} />
+									<div class={`${borderColorString[`${day.color2}`]}`} />
 								</div>
 							{:else if day.color1}
 								<div
@@ -201,7 +184,7 @@
 		--translate-y: calc(-100% - var(--arrow-size));
 		content: attr(data-tooltip);
 		color: white;
-		padding: 0.5rem;
+		padding: 1rem 2rem;
 		width: max-content;
 		background: var(--tooltip-color);
 		border-radius: 0.3rem;
