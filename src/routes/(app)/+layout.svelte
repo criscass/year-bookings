@@ -1,7 +1,4 @@
 <script lang="ts">
-	import '@skeletonlabs/skeleton/themes/theme-modern.css';
-	import '@skeletonlabs/skeleton/styles/all.css';
-
 	import IconAccountBoxOutline from '~icons/mdi/account-box-outline';
 	import '../../app.postcss';
 

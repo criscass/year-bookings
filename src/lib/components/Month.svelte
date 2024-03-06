@@ -120,7 +120,29 @@
 
 					{#if (typeof day === 'object' && day.color2) || (typeof day === 'object' && day.color1)}
 						<!-- Infos Tooltip -->
-						<div class="booked-day" data-tooltip={day.name1}>
+
+						<div
+							class="booked-day"
+							data-tooltip={day.name1}
+							on:click={() =>
+								handleEditClick(
+									day.name1,
+									day.start_on_day,
+									day.end_on_day,
+									day.color1,
+									day.booking_id
+								)}
+							on:keydown={() =>
+								handleEditClick(
+									day.name1,
+									day.start_on_day,
+									day.end_on_day,
+									day.color1,
+									day.booking_id
+								)}
+							role="button"
+							tabindex="-1"
+						>
 							<span class="text-lg font-normal">
 								{day.dayNumber}
 							</span>

@@ -14,8 +14,8 @@
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
+			width="28"
+			height="28"
 			viewBox="6 6 12 12"
 			><path
 				fill="currentColor"
@@ -24,7 +24,7 @@
 		>
 	</button>
 
-	<strong class="text-2xl">{$year}</strong>
+	<strong class="text-4xl">{$year}</strong>
 
 	<!-- Right arrow button -->
 	<button
@@ -34,8 +34,8 @@
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
-			width="24"
-			height="24"
+			width="28"
+			height="28"
 			viewBox="6 6 12 12"
 			><path
 				fill="currentColor"
@@ -46,7 +46,4 @@
 </div>
 
 <style>
-	.title {
-		font-family: 'Caveat Variable', sans-serif;
-	}
 </style>

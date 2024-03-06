@@ -7,16 +7,37 @@
 	import IconAccountDetails from '~icons/mdi/card-account-details-outline';
 	export let data: SuperValidated<ProfileSchema>;
 	const { form, errors, enhance } = superForm(data);
+
+	import { getToastStore } from '@skeletonlabs/skeleton';
+	import type { ToastSettings } from '@skeletonlabs/skeleton';
+
+	const toastStore = getToastStore();
+
+	function toastMessage() {
+		const t: ToastSettings = {
+			message: 'You have succesfully changed the username.'
+		};
+		toastStore.trigger(t);
+	}
 </script>
 
-<section class="px-6 pt-16">
-	<div class="flex items-center font-semibold">
-		<IconAccountDetails style="font-size: 2rem;" />
-		<span class="ml-4">User Name</span>
+<section class="px-6 pt-6 flex flex-col gap-8">
+	<div class="">
+		<div class="flex items-center font-semibold">
+			<IconAccountDetails style="font-size: 2rem;" />
+			<span class="ml-4">User Name</span>
+		</div>
+		<p class="text-sm mb-6">
+			Change the user name associated with your account
+		</p>
 	</div>
-	<p class="text-sm mb-6">Change the user name associated with your account</p>
 	<!-- Personal Details Form -->
-	<form method="POST" action="?/updateProfile" use:enhance>
+	<form
+		method="POST"
+		action="?/updateProfile"
+		on:submit={toastMessage}
+		use:enhance
+	>
 		<input
 			type="text"
 			name="full_name"
@@ -30,7 +51,7 @@
 			>
 		{/if}
 
-		<button class="btn variant-filled-primary mt-4" type="submit">Submit</button
+		<button class="btn variant-filled-primary mt-6" type="submit">Submit</button
 		>
 	</form>
 </section>
