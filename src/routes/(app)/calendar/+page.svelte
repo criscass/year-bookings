@@ -11,7 +11,7 @@
 
 	export let data: PageData;
 
-	$user_name = data.profile[0].full_name;
+	// $user_name = data.profile[0].full_name;
 </script>
 
 {#if $isEditable}

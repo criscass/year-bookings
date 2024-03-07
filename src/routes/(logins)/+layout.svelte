@@ -1,5 +1,4 @@
 <script lang="ts">
-	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../../app.postcss';
 	import { page } from '$app/stores';
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';

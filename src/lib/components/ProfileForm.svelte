@@ -22,7 +22,7 @@
 </script>
 
 <section class="px-6 pt-6 flex flex-col gap-8">
-	<div class="">
+	<div>
 		<div class="flex items-center font-semibold">
 			<IconAccountDetails style="font-size: 2rem;" />
 			<span class="ml-4">User Name</span>

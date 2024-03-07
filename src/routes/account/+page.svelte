@@ -6,26 +6,31 @@
 	// import PasswordForm from '$lib/components/PasswordForm.svelte';
 	// import { user_name } from '$lib/stores/store';
 	import IconBackArrow from '~icons/tabler/arrow-back-up';
+	import Properties from '$lib/components/Properties.svelte';
 
 	export let data: PageData;
 
 	// $user_name = data.profileForm.
 </script>
 
-<a href="/calendar">
-	<IconBackArrow class="icon-back-arrow" />
-</a>
+<div class="mt-8 grid grid-cols-2 justify-items-start px-8">
+	<a href="/calendar" class="col-span-1">
+		<IconBackArrow class="icon-back-arrow" />
+	</a>
+	<LightSwitch class="col-span-1 justify-self-end" width="w-16" height="h-8" />
+</div>
 <div class="py-20">
 	<div class="mx-auto flex max-w-2xl flex-col items-center pb-20 text-center">
 		<!-- Account header -->
 		<div class="flex flex-col mb-8">
-			<LightSwitch class="col-span-2 mb-12" width="w-24" height="h-12" />
-			<span class="text-3xl font-bold">Account Settings</span>
 			<hr />
 		</div>
 
 		<div class="grid grid-cols-1">
+			<Properties />
+			<hr class="my-8" />
 			<!-- Change Profile name form -->
+			<span class="text-3xl font-bold">Account Settings</span>
 			<ProfileForm data={data.profileForm} />
 			<!-- Change Email form -->
 			<!-- <EmailForm data={data.emailForm} /> -->
@@ -49,8 +54,6 @@
 <style>
 	:global(.icon-back-arrow) {
 		font-size: 2rem;
-		margin-top: 1rem;
-		margin-left: 1rem;
 	}
 	a {
 		color: inherit;
