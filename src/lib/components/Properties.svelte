@@ -2,11 +2,12 @@
 	import type { CreatePropertySchema } from '$lib/schemas';
 	import PropertiesCreationInput from './PropertiesCreationInput.svelte';
 	import type { SuperValidated } from 'sveltekit-superforms';
-	import { superForm } from 'sveltekit-superforms/client';
+
 	import { newPropertyInputOpen } from '../stores/store';
 
 	export let data: SuperValidated<CreatePropertySchema>;
 	export let properties: CreatePropertySchema[];
+	const { form, errors, enhance } = superForm(data);
 
 	// const { form, errors, enhance } = superForm(data, {
 	// 	resetForm: true,
@@ -28,6 +29,7 @@
 
 	import { onMount } from 'svelte';
 	import PropertiesEditInput from './PropertiesEditInput.svelte';
+	import { superForm } from 'sveltekit-superforms/client';
 
 	$: beingEdited = NaN;
 
@@ -41,7 +43,7 @@
 		$newPropertyInputOpen = true;
 	}
 	// onMount(() => {
-	// 	console.log('Properties loaded');
+	// 	console.log('Properties: ', properties);
 	// });
 </script>
 
@@ -57,6 +59,7 @@
 				<div class="col-span-10 w-full">
 					<PropertiesEditInput
 						{data}
+						property_id={property.id}
 						property_name={property.property_name}
 						{properties}
 						bind:beingEdited
@@ -83,12 +86,20 @@
 						class="text-slate-400 hover:text-slate-50"
 					/>
 				</button>
-				<button class="col-span-1">
-					<IconTrash
-						style="font-size: 1.5rem;"
-						class="text-slate-400 hover:text-slate-50"
-					/>
-				</button>
+				<form
+					method="POST"
+					action="?/deleteProperty"
+					class="col-span-1 flex"
+					use:enhance
+				>
+					<input type="hidden" name="id" value={property.id} />
+					<button type="submit" name="delete">
+						<IconTrash
+							style="font-size: 1.5rem;"
+							class="text-slate-400 hover:text-slate-50"
+						/>
+					</button>
+				</form>
 			{/if}
 		{/each}
 	</div>

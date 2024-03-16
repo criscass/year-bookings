@@ -5,10 +5,11 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { EditPropertySchema } from '$lib/schemas';
 	export let data: SuperValidated<EditPropertySchema>;
-	export let properties: CreatePropertySchema[];
+	export let properties: EditPropertySchema[];
 	export let beingEdited;
 
 	export let property_name: string;
+	export let property_id: number;
 
 	const { form, errors, enhance } = superForm(data, {
 		resetForm: true,
@@ -25,32 +26,41 @@
 		},
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
+				beingEdited = NaN;
 				return;
+			} else {
+				console.log('errors:', $errors);
 			}
 		}
 	});
+
+	$form.id = property_id;
+	$form.property_name = property_name;
 </script>
 
 <form
 	method="POST"
-	action="?/createNewProperty"
+	action="?/editPropertyName"
 	use:enhance
 	class="grid grid-cols-10 gap-2 gap-y-4 justify-items-start items-center"
 >
 	<div class="col-span-7">
-		<input
-			type="text"
-			name="property_name"
-			aria-label="Create a new property"
-			bind:value={$form.property_name}
-			class="input h-10 w-56"
-		/>
+		<div class="flex flex-col">
+			<input
+				type="text"
+				name="property_name"
+				aria-label="Create a new property"
+				bind:value={$form.property_name}
+				class="input h-10 w-56"
+			/>
+			<input type="hidden" name="id" bind:value={$form.id} />
 
-		{#if $errors.property_name}
-			<span class="cols-span-7 text-error-600 dark:text-error-500"
-				>{$errors.property_name}</span
-			>
-		{/if}
+			{#if $errors.property_name}
+				<span class=" text-error-600 dark:text-error-500"
+					>{$errors.property_name}</span
+				>
+			{/if}
+		</div>
 	</div>
 
 	<!-- Confirm new property creation-->

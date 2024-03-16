@@ -50,7 +50,8 @@ export const load: PageServerLoad = async (event) => {
 
 	return {
 		properties: await getProperties(),
-		propertiesForm: await superValidate(event, createPropertySchema),
+		createPropertiesForm: await superValidate(event, createPropertySchema),
+		editPropertiesForm: await superValidate(event, editPropertySchema),
 		profileForm: await superValidate(await getUserProfile(), profileSchema, {
 			id: 'profile'
 		})
@@ -71,6 +72,7 @@ export const actions: Actions = {
 		}
 
 		const profileForm = await superValidate(event, profileSchema, {
+			...session,
 			id: 'profile'
 		});
 
@@ -124,65 +126,105 @@ export const actions: Actions = {
 		return {
 			createPropertyForm
 		};
+	},
+
+	editPropertyName: async (event) => {
+		const session = await event.locals.getSession();
+
+		if (!session) {
+			throw error(401, 'Unauthorized');
+		}
+		const editPropertyForm = await superValidate(event, editPropertySchema, {
+			...session,
+			id: 'edit'
+		});
+		if (!editPropertyForm.valid) {
+			return fail(400, {
+				editPropertyForm
+			});
+		}
+
+		const { error: editPropertyError } = await supabaseAdmin
+			.from('properties')
+			.update({ property_name: editPropertyForm.data.property_name })
+			.eq('id', editPropertyForm.data.id);
+
+		if (editPropertyError) {
+			return setError(editPropertyForm, 'Error editing property.');
+		}
+
+		return {
+			editPropertyForm
+		};
+	},
+
+	deleteProperty: async ({ request }) => {
+		const formData = await request.formData();
+		const propertyId = formData.get('id');
+
+		const { error: deletePropertyError } = await supabaseAdmin
+			.from('properties')
+			.delete()
+			.eq('id', propertyId);
 	}
-	// updateEmail: async (event) => {
-	// 	const session = await event.locals.getSession();
-	// 	if (!session) {
-	// 		throw error(401, 'Unauthorized');
-	// 	}
-
-	// 	const emailForm = await superValidate(event, emailSchema, {
-	// 		id: 'email'
-	// 	});
-
-	// 	if (!emailForm.valid) {
-	// 		return fail(400, {
-	// 			emailForm
-	// 		});
-	// 	}
-
-	// 	const { error: emailError } = await event.locals.supabase.auth.updateUser({
-	// 		email: emailForm.data.email
-	// 	});
-
-	// 	if (emailError) {
-	// 		return setError(emailForm, 'email', 'Error updating your email.');
-	// 	}
-
-	// 	return {
-	// 		emailForm
-	// 	};
-	// },
-	// updatePassword: async (event) => {
-	// 	const session = await event.locals.getSession();
-	// 	if (!session) {
-	// 		throw error(401, 'Unauthorized');
-	// 	}
-
-	// 	const passwordForm = await superValidate(event, passwordSchema, {
-	// 		id: 'password'
-	// 	});
-
-	// 	if (!passwordForm.valid) {
-	// 		return fail(400, {
-	// 			passwordForm
-	// 		});
-	// 	}
-
-	// 	if (passwordForm.data.password !== passwordForm.data.password_confirm) {
-	// 		return setError(passwordForm, 'password_confirm', 'Passwords must match');
-	// 	}
-
-	// 	const { error: passwordError } =
-	// 		await event.locals.supabase.auth.updateUser({
-	// 			password: passwordForm.data.password
-	// 		});
-
-	// 	if (passwordError) {
-	// 		return setError(passwordForm, null, 'Error updating your password');
-	// 	}
-	// 	return {
-	// 		passwordForm
-	// 	};
-	// }
 };
+// updateEmail: async (event) => {
+// 	const session = await event.locals.getSession();
+// 	if (!session) {
+// 		throw error(401, 'Unauthorized');
+// 	}
+
+// 	const emailForm = await superValidate(event, emailSchema, {
+// 		id: 'email'
+// 	});
+
+// 	if (!emailForm.valid) {
+// 		return fail(400, {
+// 			emailForm
+// 		});
+// 	}
+
+// 	const { error: emailError } = await event.locals.supabase.auth.updateUser({
+// 		email: emailForm.data.email
+// 	});
+
+// 	if (emailError) {
+// 		return setError(emailForm, 'email', 'Error updating your email.');
+// 	}
+
+// 	return {
+// 		emailForm
+// 	};
+// },
+// updatePassword: async (event) => {
+// 	const session = await event.locals.getSession();
+// 	if (!session) {
+// 		throw error(401, 'Unauthorized');
+// 	}
+
+// 	const passwordForm = await superValidate(event, passwordSchema, {
+// 		id: 'password'
+// 	});
+
+// 	if (!passwordForm.valid) {
+// 		return fail(400, {
+// 			passwordForm
+// 		});
+// 	}
+
+// 	if (passwordForm.data.password !== passwordForm.data.password_confirm) {
+// 		return setError(passwordForm, 'password_confirm', 'Passwords must match');
+// 	}
+
+// 	const { error: passwordError } =
+// 		await event.locals.supabase.auth.updateUser({
+// 			password: passwordForm.data.password
+// 		});
+
+// 	if (passwordError) {
+// 		return setError(passwordForm, null, 'Error updating your password');
+// 	}
+// 	return {
+// 		passwordForm
+// 	};
+// }

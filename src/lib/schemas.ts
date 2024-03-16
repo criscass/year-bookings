@@ -99,7 +99,7 @@ export const createPropertySchema = z.object({
 		.min(3, 'The property name should be at least 3 characters')
 		.max(28, 'The property name cannot exceed 28 characters')
 });
-export type CreatePropertySchema = typeof createBookingSchema;
+export type CreatePropertySchema = typeof createPropertySchema;
 
 /**
  * Edit Property Form Schema
@@ -108,6 +108,7 @@ export const editPropertySchema = z.object({
 	property_name: z
 		.string()
 		.min(3, 'The property name should be at least 3 characters')
-		.max(28, 'The property name cannot exceed 28 characters')
+		.max(28, 'The property name cannot exceed 28 characters'),
+	id: z.number()
 });
-export type EditPropertySchema = typeof editBookingSchema;
+export type EditPropertySchema = typeof editPropertySchema;
