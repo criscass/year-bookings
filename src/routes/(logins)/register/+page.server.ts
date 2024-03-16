@@ -37,7 +37,7 @@ export const actions: Actions = {
 		});
 
 		if (authError) {
-			return setError(form, null, 'An error occurred while registering.');
+			return setError(form, 'An error occurred while registering.');
 		}
 
 		redirect(302, '/check_email');

@@ -6,10 +6,17 @@
 	import EditSlideDrawer from '$lib/components/EditSlideDrawer.svelte';
 
 	import { slide } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
 	const today = new Date();
 
 	export let data: PageData;
+
+	const properties = data.properties;
+
+	// onMount(() => {
+
+	// });
 
 	// $user_name = data.profile[0].full_name;
 </script>

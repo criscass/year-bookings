@@ -7,7 +7,6 @@
 	import { year, isEditable, isEditable2, user_name } from '$lib/stores/store';
 	import { scale } from 'svelte/transition';
 	import type { PageData } from '../$types';
-	export let data: PageData;
 
 	function prevYear() {
 		$year = $year - 1;

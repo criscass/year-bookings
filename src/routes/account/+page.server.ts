@@ -1,12 +1,30 @@
 import { error, redirect, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from '../$types';
 import { setError, superValidate } from 'sveltekit-superforms/server';
-import { emailSchema, profileSchema, passwordSchema } from '$lib/schemas';
+import {
+	emailSchema,
+	profileSchema,
+	passwordSchema,
+	createPropertySchema,
+	editPropertySchema
+} from '$lib/schemas';
+
+import { supabaseAdmin } from '$lib/server/supabase-admin';
 
 export const load: PageServerLoad = async (event) => {
 	const session = await event.locals.getSession();
 	if (!session) {
 		throw redirect(302, '/login');
+	}
+
+	async function getProperties() {
+		const { data: properties, error: propertiesError } =
+			await event.locals.supabase.from('properties').select('*');
+
+		if (propertiesError) {
+			throw error(500, 'Error fetching properties, please try again later.');
+		}
+		return properties;
 	}
 
 	/**
@@ -31,15 +49,17 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	return {
+		properties: await getProperties(),
+		propertiesForm: await superValidate(event, createPropertySchema),
 		profileForm: await superValidate(await getUserProfile(), profileSchema, {
 			id: 'profile'
-		}),
-		emailForm: await superValidate({ email: session.user.email }, emailSchema, {
-			id: 'email'
-		}),
-		passwordForm: await superValidate(passwordSchema, {
-			id: 'password'
 		})
+		// emailForm: await superValidate({ email: session.user.email }, emailSchema, {
+		// 	id: 'email'
+		// }),
+		// passwordForm: await superValidate(passwordSchema, {
+		// 	id: 'password'
+		// })
 	};
 };
 
@@ -66,71 +86,103 @@ export const actions: Actions = {
 			.eq('id', session.user.id);
 
 		if (profileError) {
-			return setError(profileForm, null, 'Error updating your profile.');
+			return setError(profileForm, 'Error updating your profile.');
 		}
 
 		return {
 			profileForm
 		};
 	},
-	updateEmail: async (event) => {
+
+	createNewProperty: async (event) => {
 		const session = await event.locals.getSession();
 		if (!session) {
 			throw error(401, 'Unauthorized');
 		}
-
-		const emailForm = await superValidate(event, emailSchema, {
-			id: 'email'
-		});
-
-		if (!emailForm.valid) {
+		const createPropertyForm = await superValidate(
+			event,
+			createPropertySchema,
+			{
+				id: 'create'
+			}
+		);
+		if (!createPropertyForm.valid) {
 			return fail(400, {
-				emailForm
+				createPropertyForm
 			});
 		}
 
-		const { error: emailError } = await event.locals.supabase.auth.updateUser({
-			email: emailForm.data.email
-		});
-
-		if (emailError) {
-			return setError(emailForm, 'email', 'Error updating your email.');
-		}
-
-		return {
-			emailForm
-		};
-	},
-	updatePassword: async (event) => {
-		const session = await event.locals.getSession();
-		if (!session) {
-			throw error(401, 'Unauthorized');
-		}
-
-		const passwordForm = await superValidate(event, passwordSchema, {
-			id: 'password'
-		});
-
-		if (!passwordForm.valid) {
-			return fail(400, {
-				passwordForm
+		const { error: createPropertyError } = await supabaseAdmin
+			.from('properties')
+			.insert({
+				...createPropertyForm.data,
+				user_id: session.user.id
 			});
-		}
-
-		if (passwordForm.data.password !== passwordForm.data.password_confirm) {
-			return setError(passwordForm, 'password_confirm', 'Passwords must match');
-		}
-
-		const { error: passwordError } =
-			await event.locals.supabase.auth.updateUser({
-				password: passwordForm.data.password
-			});
-
-		if (passwordError) {
-			return setError(passwordForm, null, 'Error updating your password');
+		if (createPropertyError) {
+			return setError(createPropertyForm, 'Error creating property.');
 		}
 		return {
-			passwordForm
+			createPropertyForm
 		};
 	}
+	// updateEmail: async (event) => {
+	// 	const session = await event.locals.getSession();
+	// 	if (!session) {
+	// 		throw error(401, 'Unauthorized');
+	// 	}
+
+	// 	const emailForm = await superValidate(event, emailSchema, {
+	// 		id: 'email'
+	// 	});
+
+	// 	if (!emailForm.valid) {
+	// 		return fail(400, {
+	// 			emailForm
+	// 		});
+	// 	}
+
+	// 	const { error: emailError } = await event.locals.supabase.auth.updateUser({
+	// 		email: emailForm.data.email
+	// 	});
+
+	// 	if (emailError) {
+	// 		return setError(emailForm, 'email', 'Error updating your email.');
+	// 	}
+
+	// 	return {
+	// 		emailForm
+	// 	};
+	// },
+	// updatePassword: async (event) => {
+	// 	const session = await event.locals.getSession();
+	// 	if (!session) {
+	// 		throw error(401, 'Unauthorized');
+	// 	}
+
+	// 	const passwordForm = await superValidate(event, passwordSchema, {
+	// 		id: 'password'
+	// 	});
+
+	// 	if (!passwordForm.valid) {
+	// 		return fail(400, {
+	// 			passwordForm
+	// 		});
+	// 	}
+
+	// 	if (passwordForm.data.password !== passwordForm.data.password_confirm) {
+	// 		return setError(passwordForm, 'password_confirm', 'Passwords must match');
+	// 	}
+
+	// 	const { error: passwordError } =
+	// 		await event.locals.supabase.auth.updateUser({
+	// 			password: passwordForm.data.password
+	// 		});
+
+	// 	if (passwordError) {
+	// 		return setError(passwordForm, null, 'Error updating your password');
+	// 	}
+	// 	return {
+	// 		passwordForm
+	// 	};
+	// }
 };

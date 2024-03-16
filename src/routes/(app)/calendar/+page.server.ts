@@ -1,54 +1,13 @@
-import { error, fail, redirect } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from './$types';
+import { error, fail } from '@sveltejs/kit';
+import type { Actions } from './$types';
 import { setError, superValidate } from 'sveltekit-superforms/client';
 import {
 	createBookingSchema,
 	editBookingSchema,
 	deleteBookingSchema
 } from '$lib/schemas';
+
 import { supabaseAdmin } from '$lib/server/supabase-admin';
-
-export const load: PageServerLoad = async (event) => {
-	const session = await event.locals.getSession();
-	if (!session) {
-		throw redirect(302, '/login');
-	}
-	async function getBookings() {
-		const { data: bookings, error: bookingsError } = await event.locals.supabase
-			.from('bookings')
-			.select('*');
-
-		if (bookingsError) {
-			throw error(500, 'Error fetching bookings, please try again later.');
-		}
-		return bookings;
-	}
-
-	async function getUserProfile() {
-		const { data: profile, error: profileError } = await event.locals.supabase
-			.from('profiles')
-			.select('*');
-
-		if (profileError) {
-			throw error(500, 'Error fetching bookings, please try again later.');
-		}
-		return profile;
-	}
-
-	return {
-		createBookingForm: await superValidate(createBookingSchema, {
-			id: 'create'
-		}),
-		bookings: await getBookings(),
-		profile: await getUserProfile(),
-		deleteBookingForm: await superValidate(deleteBookingSchema, {
-			id: 'delete'
-		}),
-		editBookingForm: await superValidate(editBookingSchema, {
-			id: 'edit'
-		})
-	};
-};
 
 export const actions: Actions = {
 	createBooking: async (event) => {

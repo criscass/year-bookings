@@ -7,8 +7,18 @@
 	// import { user_name } from '$lib/stores/store';
 	import IconBackArrow from '~icons/tabler/arrow-back-up';
 	import Properties from '$lib/components/Properties.svelte';
+	import { onMount } from 'svelte';
+	import { superForm } from 'sveltekit-superforms/client';
+	import { createPropertySchema } from '$lib/schemas';
+	import type { CreatePropertySchema } from '$lib/schemas';
 
 	export let data: PageData;
+
+	$: properties = data.properties;
+
+	// onMount(() => {
+	// 	console.log(properties);
+	// });
 
 	// $user_name = data.profileForm.
 </script>
@@ -27,8 +37,8 @@
 		</div>
 
 		<div class="grid grid-cols-1">
-			<Properties />
-			<hr class="my-8" />
+			<Properties data={data.propertiesForm} {properties} />
+			<hr class="my-24" />
 			<!-- Change Profile name form -->
 			<span class="text-3xl font-bold">Account Settings</span>
 			<ProfileForm data={data.profileForm} />

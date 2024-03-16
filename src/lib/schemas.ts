@@ -89,3 +89,25 @@ export const deleteBookingSchema = z.object({
 });
 
 export type DeleteBookingSchema = typeof deleteBookingSchema;
+
+/**
+ * Create Property Form Schema
+ */
+export const createPropertySchema = z.object({
+	property_name: z
+		.string()
+		.min(3, 'The property name should be at least 3 characters')
+		.max(28, 'The property name cannot exceed 28 characters')
+});
+export type CreatePropertySchema = typeof createBookingSchema;
+
+/**
+ * Edit Property Form Schema
+ */
+export const editPropertySchema = z.object({
+	property_name: z
+		.string()
+		.min(3, 'The property name should be at least 3 characters')
+		.max(28, 'The property name cannot exceed 28 characters')
+});
+export type EditPropertySchema = typeof editBookingSchema;
