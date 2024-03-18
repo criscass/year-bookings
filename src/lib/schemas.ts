@@ -62,7 +62,8 @@ export const createBookingSchema = z.object({
 		.max(28, 'The guest name cannot exceed 28 characters'),
 	start_on_day: z.string().min(1, 'Please enter a check-in date'),
 	end_on_day: z.string().min(1, 'Please enter a check-out date'),
-	color: z.string().min(1, 'Please choose a color')
+	color: z.string().min(1, 'Please choose a color'),
+	property_id: z.number()
 });
 export type CreateBookingSchema = typeof createBookingSchema;
 
@@ -77,7 +78,8 @@ export const editBookingSchema = z.object({
 		.max(28, 'The guest name cannot exceed 28 characters'),
 	start_on_day: z.string().min(1, 'Please enter a check-in date'),
 	end_on_day: z.string().min(1, 'Please enter a check-out date'),
-	color: z.string().min(1, 'Please choose a color')
+	color: z.string().min(1, 'Please choose a color'),
+	property_id: z.number()
 });
 export type EditBookingSchema = typeof editBookingSchema;
 

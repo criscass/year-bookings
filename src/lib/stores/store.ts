@@ -1,4 +1,5 @@
 import { writable, type Writable } from 'svelte/store';
+import { localStorageStore } from '@skeletonlabs/skeleton';
 
 export const year = writable(new Date().getFullYear());
 
@@ -20,3 +21,8 @@ export let formStatus = writable({
 	end_on_day: '',
 	booking_id: 0
 });
+
+export let storePropertyId: Writable<number | string> = localStorageStore(
+	'property_id',
+	''
+);

@@ -72,7 +72,6 @@ export const actions: Actions = {
 		if (updateBookingError) {
 			return setError(
 				updateBookingForm,
-				null,
 				'Error updating booking, please try again later.'
 			);
 		}

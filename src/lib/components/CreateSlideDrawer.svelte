@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { CreateBookingSchema } from '$lib/schemas';
 	import type { SuperValidated } from 'sveltekit-superforms';
-	import { isEditable, borderColor } from '../stores/store';
+	import { isEditable, borderColor, storePropertyId } from '../stores/store';
 
 	import ColorPicker from './ColorPicker.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
@@ -21,8 +21,6 @@
 	function closeDrawer() {
 		$isEditable = !$isEditable;
 	}
-
-	// let guestNameError = $errors.guest_name;
 </script>
 
 <form
@@ -103,6 +101,9 @@
 			>
 		{/if}
 	</div>
+
+	<!-- Property -->
+	<input type="hidden" name="property_id" bind:value={$storePropertyId} />
 
 	<!-- Submit button -->
 	<button

@@ -24,7 +24,10 @@ const config = {
 		skeleton({
 			themes: { preset: ['modern', 'skeleton'] }
 		})
-	]
+	],
+	future: {
+		hoverOnlyWhenSupported: true
+	}
 } satisfies Config;
 
 export default config;

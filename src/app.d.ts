@@ -10,8 +10,11 @@ declare global {
 		interface PageData {
 			session: Session | null;
 		}
-		// interface Error {}
-		// interface Platform {}
+		interface Property {
+			id: number;
+			property_name: string;
+			user_id: number;
+		}
 	}
 }
 

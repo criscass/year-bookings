@@ -4,9 +4,12 @@
 
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 	import YearButtons from '$lib/components/YearButtons.svelte';
-	import { year, isEditable, isEditable2, user_name } from '$lib/stores/store';
+	import { year, isEditable, isEditable2 } from '$lib/stores/store';
 	import { scale } from 'svelte/transition';
 	import type { PageData } from '../$types';
+	import PropertyPicker from '$lib/components/PropertyPicker.svelte';
+
+	export let data: PageData;
 
 	function prevYear() {
 		$year = $year - 1;
@@ -32,7 +35,7 @@
 			slotTrail="place-content-end"
 		>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl ml-5">{$user_name}</strong>
+				<PropertyPicker {data} />
 			</svelte:fragment>
 
 			<YearButtons on:prevYear={prevYear} on:nextYear={nextYear} />

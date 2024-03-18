@@ -31,7 +31,7 @@ function getDateTimestamp(datestring: string) {
 	return dateObj.getTime();
 }
 
-export default function generateCalendarMonth(target: Date, bookings: any) {
+export default function calendify(target: Date, bookings: any) {
 	let currentDateIndex = 0;
 	let currentWeekIndex = 0;
 	let currentWeek: (Day | number)[] = [];
@@ -45,7 +45,7 @@ export default function generateCalendarMonth(target: Date, bookings: any) {
 	let firstDayOfMonth = new Date(targetYear, targetMonth, 1).getDay();
 
 	// amount of days  in the month
-	const totalDaysInMonth = new Date(targetYear, targetMonth, 0).getDate();
+	const totalDaysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
 
 	// Build the calendar
 	while (currentDateIndex < totalDaysInMonth) {

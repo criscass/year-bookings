@@ -1,6 +1,6 @@
 <script lang="ts">
 	import calendify from '$lib/functions/calendify';
-	import type { PageData } from '../../routes/$types';
+
 	import {
 		formStatus,
 		isEditable,
@@ -9,16 +9,6 @@
 	} from '../stores/store';
 
 	import { onMount } from 'svelte';
-	import type { PopupSettings } from '@skeletonlabs/skeleton';
-
-	const popupFeatured: PopupSettings = {
-		// Represents the type of event that opens/closed the popup
-		event: 'click',
-		// Matches the data-popup value on your popup element
-		target: 'popupFeatured',
-		// Defines which side of your trigger the popup will appear
-		placement: 'bottom'
-	};
 
 	interface BorderColorString {
 		primary: string;
@@ -37,9 +27,13 @@
 
 	export let month = 0; //Jan
 
-	export let data: PageData;
+	export let propertyBookings: Property[];
 
-	$: bookings = data.bookings;
+	$: bookings = propertyBookings;
+
+	// onMount(() => {
+	// 	console.log('Month component reloaded ', bookings);
+	// });
 
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -95,7 +89,7 @@
 	$: current = calendify(new Date($year, month), bookings);
 	$: next = calendify(new Date($year, month + 1), bookings);
 	// onMount(() => {
-	// 	console.log('current): ', current);
+	// 	console.log('month): ', month);
 	// });
 </script>
 

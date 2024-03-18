@@ -13,6 +13,7 @@
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
 				$isEditable2 = false;
+
 				return;
 			}
 		}
