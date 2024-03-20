@@ -4,12 +4,19 @@
 	import '../app.postcss';
 	import type { LayoutData } from './$types';
 	import { onMount } from 'svelte';
-	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
+	import { AppShell } from '@skeletonlabs/skeleton';
 	import { invalidate } from '$app/navigation';
 	import { initializeStores } from '@skeletonlabs/skeleton';
 
 	initializeStores();
-	import { Toast } from '@skeletonlabs/skeleton';
+
+	import { Modal, getModalStore } from '@skeletonlabs/skeleton';
+	import type {
+		ModalSettings,
+		ModalComponent,
+		ModalStore
+	} from '@skeletonlabs/skeleton';
+	// import { Toast } from '@skeletonlabs/skeleton';
 	//Rather use stripe then this client side supabase client
 	export let data: LayoutData;
 	$: ({ session, supabase } = data);
@@ -28,7 +35,8 @@
 
 <!-- App Shell -->
 
-<Toast position="t" />
+<!-- <Toast position="t" /> -->
+<Modal height="h-auto" regionBody="overflow-hidden" />
 <AppShell>
 	<slot />
 </AppShell>

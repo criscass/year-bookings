@@ -6,8 +6,20 @@
 	import { newPropertyInputOpen } from '../stores/store';
 
 	export let data: SuperValidated<CreatePropertySchema>;
+	export let bookings;
+	// console.log('bookings', bookings);
+
 	export let properties: CreatePropertySchema[];
-	const { form, errors, enhance } = superForm(data);
+	const { form, errors, enhance } = superForm(data, {
+		onResult: ({ result }) => {
+			if (result.type === 'success') {
+				confirmDelete = false;
+				return;
+			} else {
+				console.log('errors:', $errors);
+			}
+		}
+	});
 
 	// const { form, errors, enhance } = superForm(data, {
 	// 	resetForm: true,
@@ -31,7 +43,61 @@
 	import PropertiesEditInput from './PropertiesEditInput.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
 
+	/**
+	 * Modal for property information
+	 */
+	import { Modal, getModalStore } from '@skeletonlabs/skeleton';
+	import type {
+		ModalSettings,
+		ModalComponent,
+		ModalStore
+	} from '@skeletonlabs/skeleton';
+
+	function generateGuestHTML(bookings) {
+		let htmlOutput = '';
+
+		for (const guest of bookings) {
+			const formattedStartDate = new Date(
+				guest.start_on_day
+			).toLocaleDateString();
+			const formattedEndDate = new Date(guest.end_on_day).toLocaleDateString();
+
+			htmlOutput += `
+            <h3 class="text-xl font-bold mt-4">${guest.guest_name}</h3>
+            <div class="flex flex-row gap-4">
+              <p>from the ${formattedStartDate}</p>
+              <p>to the ${formattedEndDate}</p>
+            </div>
+        `;
+		}
+
+		return htmlOutput;
+	}
+
+	const modalStore = getModalStore();
+
+	let modal: ModalSettings = {
+		type: 'alert',
+		// Data
+		title: '',
+		body: ''
+	};
+
+	function handleModal(title: string, propertyId: number) {
+		modal.title = `<h1 class="text-2xl font-bold">${title}</h1>`;
+		const currentBookings = bookings.filter(
+			(booking) => booking.property_id === propertyId
+		);
+		modal.body = generateGuestHTML(currentBookings);
+		modalStore.trigger(modal);
+	}
+
+	/**
+	 * Local Variables and functions
+	 */
 	$: beingEdited = NaN;
+	let confirmDelete: boolean = false;
+	let currentPropertyId: number;
 
 	function handleEditButton(id) {
 		beingEdited = id;
@@ -42,10 +108,42 @@
 		beingEdited = NaN;
 		$newPropertyInputOpen = true;
 	}
+
+	function handleDeleteProperty(id: number) {
+		confirmDelete = true;
+		currentPropertyId = id;
+	}
 	// onMount(() => {
 	// 	console.log('Properties: ', properties);
 	// });
 </script>
+
+<!-- Confirm Delete Property -->
+{#if confirmDelete}
+	<aside class="alert variant-ghost-error flex-col items-center">
+		<!-- Message -->
+		<div class="alert-message">
+			<h3 class="h3">
+				If you delete this property you will loose all the bookings related to
+				it. Are you sure you want to delete it?
+			</h3>
+		</div>
+
+		<div class="alert-actions">
+			<button
+				type="button"
+				class="btn btn-sm variant-filled mr-4"
+				on:click={() => (confirmDelete = false)}>No</button
+			>
+			<form action="?/deleteProperty" method="POST" use:enhance>
+				<input type="hidden" name="id" value={currentPropertyId} />
+				<button name="delete" type="submit" class="btn btn-sm variant-filled"
+					>Yes!</button
+				>
+			</form>
+		</div>
+	</aside>
+{/if}
 
 <section class="px-6 pt-6 flex flex-col gap-8">
 	<div class="flex items-center font-semibold gap-8">
@@ -71,7 +169,12 @@
 						{property.property_name}
 					</p>
 				</div>
-				<button class="col-span-1">
+
+				<!-- Property Informations, Modal -->
+				<button
+					class="col-span-1"
+					on:click={() => handleModal(property.property_name, property.id)}
+				>
 					<IconQuestion
 						style="font-size: 1.5rem;"
 						class="text-slate-400 hover:text-slate-50"
@@ -86,20 +189,13 @@
 						class="text-slate-400 hover:text-slate-50"
 					/>
 				</button>
-				<form
-					method="POST"
-					action="?/deleteProperty"
-					class="col-span-1 flex"
-					use:enhance
-				>
-					<input type="hidden" name="id" value={property.id} />
-					<button type="submit" name="delete">
-						<IconTrash
-							style="font-size: 1.5rem;"
-							class="text-slate-400 hover:text-slate-50"
-						/>
-					</button>
-				</form>
+
+				<button on:click={() => handleDeleteProperty(property.id)}>
+					<IconTrash
+						style="font-size: 1.5rem;"
+						class="text-slate-400 hover:text-slate-50"
+					/>
+				</button>
 			{/if}
 		{/each}
 	</div>

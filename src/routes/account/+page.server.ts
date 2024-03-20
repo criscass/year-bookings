@@ -27,6 +27,17 @@ export const load: PageServerLoad = async (event) => {
 		return properties;
 	}
 
+	async function getBookings() {
+		const { data: bookings, error: bookingsError } = await event.locals.supabase
+			.from('bookings')
+			.select('*');
+
+		if (bookingsError) {
+			throw error(500, 'Error fetching bookings, please try again later.');
+		}
+		return bookings;
+	}
+
 	/**
 	 * Prepolpulate the form fields with user informations
 	 */
@@ -50,8 +61,10 @@ export const load: PageServerLoad = async (event) => {
 
 	return {
 		properties: await getProperties(),
+		bookings: await getBookings(),
 		createPropertiesForm: await superValidate(event, createPropertySchema),
 		editPropertiesForm: await superValidate(event, editPropertySchema),
+		deletePropertyForm: await superValidate(event, editPropertySchema),
 		profileForm: await superValidate(await getUserProfile(), profileSchema, {
 			id: 'profile'
 		})
@@ -162,10 +175,18 @@ export const actions: Actions = {
 		const formData = await request.formData();
 		const propertyId = formData.get('id');
 
+		const deletePropertyForm = await superValidate(editPropertySchema, {
+			id: 'edit'
+		});
+
 		const { error: deletePropertyError } = await supabaseAdmin
 			.from('properties')
 			.delete()
 			.eq('id', propertyId);
+
+		return {
+			deletePropertyForm
+		};
 	}
 };
 // updateEmail: async (event) => {

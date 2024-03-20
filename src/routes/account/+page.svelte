@@ -37,7 +37,11 @@
 		</div>
 
 		<div class="grid grid-cols-1">
-			<Properties data={data.propertiesForm} {properties} />
+			<Properties
+				data={data.createPropertiesForm}
+				{properties}
+				bookings={data.bookings}
+			/>
 			<hr class="my-24" />
 			<!-- Change Profile name form -->
 			<span class="text-3xl font-bold">Account Settings</span>

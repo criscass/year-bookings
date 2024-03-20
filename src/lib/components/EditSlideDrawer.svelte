@@ -160,12 +160,14 @@
 		>
 	</form>
 
-	<button
-		class="btn variant-ringed-error w-full"
-		on:click={() => (visible = true)}
-	>
-		Delete this booking</button
-	>
+	<div class="flex w-full justify-center">
+		<button
+			class="btn variant-ringed-error w-4/6"
+			on:click={() => (visible = true)}
+		>
+			Delete this booking</button
+		>
+	</div>
 {/if}
 
 <style>
