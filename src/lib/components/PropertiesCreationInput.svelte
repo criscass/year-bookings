@@ -44,7 +44,7 @@
 	method="POST"
 	action="?/createNewProperty"
 	use:enhance
-	class="grid grid-cols-10 gap-2 gap-y-4 justify-items-start items-center"
+	class="grid grid-cols-10 gap-2 gap-y- justify-items-start items-center"
 >
 	<div class="h-10 w-56 col-span-7">
 		<input

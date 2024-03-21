@@ -30,4 +30,8 @@ interface BorderColor {
 	surface: string;
 }
 
+export type Booking {
+  
+}
+
 export {};

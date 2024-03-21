@@ -9,9 +9,13 @@
 </script>
 
 <!-- <SuperDebug data={form} /> -->
-<h3 class="text-center mt-3">Login to your account</h3>
-<form method="POST" use:enhance>
-	<div class="card p-4 mt-5 w-full text-token space-y-4">
+<div class="w-full flex flex-col items-center">
+	<h3 class="text-center mt-3">Login to your account</h3>
+	<form
+		method="POST"
+		class="w-11/12 max-w-screen-md card px-8 sm:px-10 py-16 mt-5 text-token space-y-8"
+		use:enhance
+	>
 		<label class="label">
 			<span>Email</span>
 			<input
@@ -47,7 +51,9 @@
 		</label>
 
 		<div class="flex justify-center">
-			<button type="submit" class="btn variant-filled-primary">Login</button>
+			<button type="submit" class="btn variant-filled-primary mt-8"
+				>Login</button
+			>
 		</div>
-	</div>
-</form>
+	</form>
+</div>

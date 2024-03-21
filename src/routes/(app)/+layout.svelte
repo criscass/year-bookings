@@ -4,7 +4,12 @@
 
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 	import YearButtons from '$lib/components/YearButtons.svelte';
-	import { year, isEditable, isEditable2 } from '$lib/stores/store';
+	import {
+		year,
+		isEditable,
+		isEditable2,
+		createYourFirstProperty
+	} from '$lib/stores/store';
 	import { scale } from 'svelte/transition';
 	import type { PageData } from '../$types';
 	import PropertyPicker from '$lib/components/PropertyPicker.svelte';
@@ -65,7 +70,4 @@
 	:global(.icon-box) {
 		font-size: 2rem;
 	}
-	/* :global(.icon-box):hover {
-		opacity: 50;
-	} */
 </style>

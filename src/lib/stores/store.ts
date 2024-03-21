@@ -15,6 +15,8 @@ export let user_name = writable<string>('');
 
 export let newPropertyInputOpen = writable<boolean>(false);
 
+export let createYourFirstProperty = writable<boolean>(true);
+
 export let formStatus = writable({
 	name: '',
 	start_on_day: '',

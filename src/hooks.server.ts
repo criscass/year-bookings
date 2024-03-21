@@ -14,8 +14,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		// 	domain: '192.168.188.20',
 		// 	path: '/',
 		// 	sameSite: 'lax',
-		// 	secure: false,
-		// 	maxAge: 60 * 60 * 24 * 30
+		// 	secure: false
 		// }
 	});
 

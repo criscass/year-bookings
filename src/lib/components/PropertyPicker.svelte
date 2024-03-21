@@ -15,7 +15,7 @@
 
 	const properties: Property[] = data.properties;
 
-	if ($storePropertyId === '') {
+	if ($storePropertyId === '' && properties.length > 0) {
 		$storePropertyId = properties[0].id;
 	}
 	let currentValue: number;

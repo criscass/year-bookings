@@ -145,7 +145,7 @@
 	</aside>
 {/if}
 
-<section class="px-6 pt-6 flex flex-col gap-8">
+<section class="px-6 pt-6 flex flex-col gap-4">
 	<div class="flex items-center font-semibold gap-8">
 		<IconProperties style="font-size: 2rem;" />
 		<span class="text-3xl font-bold">Properties</span>
@@ -177,7 +177,7 @@
 				>
 					<IconQuestion
 						style="font-size: 1.5rem;"
-						class="text-slate-400 hover:text-slate-50"
+						class=" text-surface-900 hover:text-surface-700 dark:text-slate-400 hover:dark:text-slate-50"
 					/>
 				</button>
 				<button
@@ -186,14 +186,14 @@
 				>
 					<IconEdit
 						style="font-size: 1.5rem;"
-						class="text-slate-400 hover:text-slate-50"
+						class="text-surface-900 hover:text-surface-700 dark:text-slate-400 hover:dark:text-slate-50"
 					/>
 				</button>
 
 				<button on:click={() => handleDeleteProperty(property.id)}>
 					<IconTrash
 						style="font-size: 1.5rem;"
-						class="text-slate-400 hover:text-slate-50"
+						class="text-surface-900 hover:text-surface-700 dark:text-slate-400 hover:dark:text-slate-50"
 					/>
 				</button>
 			{/if}
@@ -212,7 +212,7 @@
 				on:click={() => handlePropertyCreationButton()}
 				><IconPlus
 					style="font-size: 1.5rem;"
-					class="text-slate-400 hover:text-slate-50"
+					class="text-surface-900 hover:text-surface-700 dark:text-slate-400 hover:dark:text-slate-50"
 				/><span class=" ml-3 self-center">Add a property</span></button
 			>
 		</div>

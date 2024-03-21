@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { isEditable, isEditable2, storePropertyId } from '$lib/stores/store';
+	import {
+		isEditable,
+		isEditable2,
+		storePropertyId,
+		createYourFirstProperty
+	} from '$lib/stores/store';
 	import Month from '$lib/components/Month.svelte';
 	import type { PageData } from './$types';
 	import CreateSlideDrawer from '$lib/components/CreateSlideDrawer.svelte';
@@ -13,6 +18,10 @@
 	$: propertyBookings = data.bookings.filter(
 		(probertyBooking) => probertyBooking.property_id === $storePropertyId
 	);
+
+	data.properties.length === 0
+		? ($createYourFirstProperty = true)
+		: ($createYourFirstProperty = false);
 
 	// onMount(() => {
 	// });
@@ -29,10 +38,48 @@
 	</div>
 {/if}
 
-<div
-	class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
->
-	{#each { length: 12 } as _, idx (idx)}
-		<Month month={idx} {propertyBookings} />
-	{/each}
-</div>
+{#if $createYourFirstProperty}
+	<div class="flex justify-center w-full">
+		<p class="sm:text-2xl text-lg mt-20 w-11/12 text-center">
+			Please add your first property in the account session.
+		</p>
+		<div class="arrow z-10" />
+	</div>
+{:else}
+	<div
+		class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
+	>
+		{#each { length: 12 } as _, idx (idx)}
+			<Month month={idx} {propertyBookings} />
+		{/each}
+	</div>
+{/if}
+
+<style>
+	.arrow {
+		position: absolute;
+		top: 8%;
+		right: 20px; /* Adjust for icon size */
+		/* transform: translateY(-20%); */
+		width: 0;
+		height: 0;
+		border-left: 15px solid transparent;
+		border-right: 15px solid transparent;
+		border-bottom: 25px solid red; /* Adjust color */
+	}
+
+	/* Animation styles */
+
+	@keyframes arrow-move {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(45px);
+		}
+	}
+
+	.arrow {
+		animation: arrow-move 1.5s ease-in-out infinite alternate;
+	}
+</style>

@@ -8,9 +8,13 @@
 	});
 </script>
 
-<h3>Register a new account</h3>
-<form method="POST" use:enhance>
-	<div class="card p-4 mt-5 w-full text-token space-y-4">
+<div class="w-full flex flex-col items-center">
+	<h3 class="text-center mt-3">Register a new account</h3>
+	<form
+		method="POST"
+		use:enhance
+		class="w-11/12 max-w-screen-md card px-8 sm:px-10 py-16 mt-5 text-token space-y-8"
+	>
 		<label class="label">
 			<span>Name</span>
 			<input
@@ -76,7 +80,9 @@
 			{/if}
 		</label>
 		<div class="flex justify-center">
-			<button type="submit" class="btn variant-filled-primary">Register</button>
+			<button type="submit" class="btn variant-filled-primary mt-8"
+				>Register</button
+			>
 		</div>
-	</div>
-</form>
+	</form>
+</div>
