@@ -15,6 +15,7 @@
 
 	const properties: Property[] = data.properties;
 
+	// Copy into local storage the first property in the properties array
 	if ($storePropertyId === '' && properties.length > 0) {
 		$storePropertyId = properties[0].id;
 	}
@@ -23,6 +24,8 @@
 	function propertyChoiceHandler(currentValue: number) {
 		$storePropertyId = currentValue;
 	}
+
+	$: $storePropertyId = currentValue;
 </script>
 
 <select

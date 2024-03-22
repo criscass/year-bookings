@@ -116,6 +116,3 @@
 		>save</button
 	>
 </form>
-
-<style>
-</style>

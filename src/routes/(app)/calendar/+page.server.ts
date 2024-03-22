@@ -35,6 +35,8 @@ export const actions: Actions = {
 
 		if (createBookingError) {
 			console.log(createBookingError);
+			console.log({ ...createBookingForm.data });
+
 			return setError(createBookingForm, null, 'Error creating contact.');
 		}
 

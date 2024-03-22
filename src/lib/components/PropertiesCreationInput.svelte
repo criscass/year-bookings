@@ -9,11 +9,6 @@
 
 	import { newPropertyInputOpen } from '../stores/store';
 
-	// function checkPropertyNameUnicity(propertyName, properties) {
-
-	//   forEach()
-	// }
-
 	const { form, errors, enhance } = superForm(data, {
 		resetForm: true,
 		validators: {
@@ -28,7 +23,6 @@
 					: null
 		},
 
-		// arrayOfObjects.some(object => object.name === valueToFind)
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
 				$newPropertyInputOpen = false;
