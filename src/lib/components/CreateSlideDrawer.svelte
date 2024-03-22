@@ -6,6 +6,8 @@
 	import ColorPicker from './ColorPicker.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
 
+	import IconClose from '~icons/mdi/close-box-outline';
+
 	export let data: SuperValidated<CreateBookingSchema>;
 	const { form, errors, enhance } = superForm(data, {
 		resetForm: true,
@@ -26,12 +28,12 @@
 <form
 	method="POST"
 	action="?/createBooking"
-	class="grid grid-cols-12 gap-4 p-4 backdrop-blur-md max-w-screen"
+	class="grid grid-cols-10 md:grid-cols-12 gap-4 p-4 backdrop-blur-md max-w-screen"
 	use:enhance
 >
 	<!-- Booking name -->
 
-	<div class="col-span-11">
+	<div class="col-span-8 md:col-span-4 md:order-1">
 		<input
 			type="text"
 			name="guest_name"
@@ -52,11 +54,12 @@
 	<button
 		type="button"
 		on:click={() => closeDrawer()}
-		class="col-span-1 text-2xl">X</button
+		class="col-span-2 order-2 text-2xl flex justify-end md:order-3"
+		><IconClose class="text-slate-400 hover:text-slate-50 text-4xl" /></button
 	>
 
 	<!-- Check in date -->
-	<div class="col-span-6">
+	<div class="col-span-5 md:order-4 md:col-span-5 order-3">
 		<input
 			type="date"
 			name="start_on_day"
@@ -73,7 +76,7 @@
 		{/if}
 	</div>
 	<!-- Check out date -->
-	<div class="col-span-6">
+	<div class="col-span-5 md:order-5 md:col-span-5 order-4">
 		<input
 			type="date"
 			name="end_on_day"
@@ -92,7 +95,7 @@
 
 	<!-- Color choice -->
 
-	<div class="  col-span-9 row-start-3">
+	<div class=" md:col-span-6 md:order-2 col-span-8 order-5">
 		<input type="hidden" name="color" bind:value={$borderColor} />
 		<ColorPicker />
 		{#if $errors.color}
@@ -109,7 +112,7 @@
 	<button
 		type="submit"
 		class:opacity-25={$errors._errors}
-		class="btn btn-sm px-8 py-6 text-lg variant-filled col-span-3 justify-self-center self-center h-8 w-8"
+		class="btn md:btn-lg btn-sm px-8 py-6 text-lg variant-filled col-span-2 justify-self-center md:justify-self-end self-center h-8 w-8 md:h-10 md:w-28 order-7"
 		>save</button
 	>
 </form>

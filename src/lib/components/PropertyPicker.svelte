@@ -28,7 +28,7 @@
 <select
 	bind:value={currentValue}
 	on:change={() => propertyChoiceHandler(currentValue)}
-	class="select w-32"
+	class="select w-32 sm:w-44"
 >
 	{#each properties as property}
 		<option value={property.id} selected={property.id == $storePropertyId}

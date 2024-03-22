@@ -65,7 +65,7 @@
 		height: 0;
 		border-left: 15px solid transparent;
 		border-right: 15px solid transparent;
-		border-bottom: 25px solid red; /* Adjust color */
+		border-bottom: 25px solid #ef4444; /* Adjust color */
 	}
 
 	/* Animation styles */

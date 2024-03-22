@@ -10,9 +10,9 @@
 	}
 </script>
 
-<div class="mt-2 p-2 rounded-lg">
+<div class="rounded-lg">
 	<!-- palette-of-colors -->
-	<div class=" whitespace-nowrap overflow-x-auto">
+	<div class=" whitespace-nowrap overflow-x-auto text-center">
 		<!-- single color -->
 		<button
 			id="secondary"
