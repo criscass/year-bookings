@@ -43,7 +43,6 @@
 		<p class="sm:text-2xl text-lg mt-20 w-11/12 text-center">
 			Please add your first property in the account session.
 		</p>
-		<div class="arrow z-10" />
 	</div>
 {:else}
 	<div
@@ -56,30 +55,4 @@
 {/if}
 
 <style>
-	.arrow {
-		position: absolute;
-		top: 8%;
-		right: 20px; /* Adjust for icon size */
-		/* transform: translateY(-20%); */
-		width: 0;
-		height: 0;
-		border-left: 15px solid transparent;
-		border-right: 15px solid transparent;
-		border-bottom: 25px solid #ef4444; /* Adjust color */
-	}
-
-	/* Animation styles */
-
-	@keyframes arrow-move {
-		from {
-			transform: translateY(0);
-		}
-		to {
-			transform: translateY(45px);
-		}
-	}
-
-	.arrow {
-		animation: arrow-move 1.5s ease-in-out infinite alternate;
-	}
 </style>

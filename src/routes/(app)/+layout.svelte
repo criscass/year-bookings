@@ -55,8 +55,9 @@
 						>+</button
 					>
 				{/if}
-				<a href="/account">
+				<a href="/account" class="relative">
 					<IconAccountBoxOutline class="icon-box hover:opacity-50" />
+					<div class="z-10" class:arrow={$createYourFirstProperty} />
 				</a>
 			</svelte:fragment>
 		</AppBar>
@@ -69,5 +70,28 @@
 <style>
 	:global(.icon-box) {
 		font-size: 2rem;
+	}
+	.arrow {
+		position: absolute;
+		top: 50px;
+		right: 3px;
+		width: 0;
+		height: 0;
+		border-left: 15px solid transparent;
+		border-right: 15px solid transparent;
+		border-bottom: 25px solid #ef4444;
+	}
+
+	@keyframes arrow-move {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(45px);
+		}
+	}
+
+	.arrow {
+		animation: arrow-move 1.5s ease-in-out infinite alternate;
 	}
 </style>

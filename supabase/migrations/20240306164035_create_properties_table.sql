@@ -1,6 +1,6 @@
 create table public.properties(
   id int primary key generated always as identity,
-  property_name text not null unique,
+  property_name text not null,
   user_id uuid references auth.users(id) on delete cascade not null
 );
 

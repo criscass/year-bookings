@@ -44,16 +44,16 @@
 <div bind:this={topDiv} class="absolute top-0 left-0" />
 
 {#if visible}
-	<aside class="alert variant-ghost-error flex-col items-center">
+	<aside class="alert variant-filled-error flex-col items-center">
 		<!-- Message -->
-		<div class="alert-message">
+		<div class="alert-message flex justify-center items-center">
 			<h3 class="h3">Are you sure you want to delete this booking?</h3>
 		</div>
 		<!-- Actions -->
 		<div class="alert-actions">
 			<button
 				type="button"
-				class="btn btn-sm variant-filled mr-4"
+				class="btn variant-filled mr-4"
 				on:click={() => (visible = false)}>No</button
 			>
 			<form action="?/deleteBooking" method="POST" use:enhance>
@@ -62,7 +62,7 @@
 					name="delete_booking_id"
 					bind:value={$formStatus.booking_id}
 				/>
-				<button type="submit" class="btn btn-sm variant-filled">Yes!</button>
+				<button type="submit" class="btn variant-filled">Yes!</button>
 			</form>
 		</div>
 	</aside>
@@ -173,4 +173,8 @@
 {/if}
 
 <style>
+	aside {
+		width: 100%;
+		height: 200px;
+	}
 </style>

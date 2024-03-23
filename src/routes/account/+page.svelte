@@ -11,21 +11,23 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import { createPropertySchema } from '$lib/schemas';
 	import type { CreatePropertySchema } from '$lib/schemas';
+	import { createYourFirstProperty } from '$lib/stores/store';
 
 	export let data: PageData;
 
 	$: properties = data.properties;
 
-	// onMount(() => {
-	// 	console.log(properties);
-	// });
+	$: backArrowIsPointedAt = $createYourFirstProperty && properties.length === 1;
 
-	// $user_name = data.profileForm.
+	// onMount(() => {
+	//
+	// });
 </script>
 
 <div class="mt-8 grid grid-cols-2 justify-items-start px-8">
-	<a href="/calendar" class="col-span-1">
+	<a href="/calendar" class="col-span-1 relative">
 		<IconBackArrow class="icon-back-arrow" />
+		<div class="z-10" class:arrow={backArrowIsPointedAt} />
 	</a>
 	<LightSwitch class="col-span-1 justify-self-end" width="w-16" height="h-8" />
 </div>
@@ -42,6 +44,7 @@
 				{properties}
 				bookings={data.bookings}
 			/>
+
 			<hr class="my-24" />
 			<!-- Change Profile name form -->
 			<span class="text-3xl font-bold">Account Settings</span>
@@ -71,5 +74,28 @@
 	}
 	a {
 		color: inherit;
+	}
+	.arrow {
+		position: absolute;
+		top: 35px;
+		left: 0;
+		width: 0;
+		height: 0;
+		border-left: 15px solid transparent;
+		border-right: 15px solid transparent;
+		border-bottom: 25px solid #ef4444;
+	}
+
+	@keyframes arrow-move {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(45px);
+		}
+	}
+
+	.arrow {
+		animation: arrow-move 1.5s ease-in-out infinite alternate;
 	}
 </style>

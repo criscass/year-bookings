@@ -8,6 +8,15 @@
 	export let data: SuperValidated<CreatePropertySchema>;
 	export let bookings;
 	// console.log('bookings', bookings);
+	import IconProperties from '~icons/mdi/house-city-outline';
+	import IconTrash from '~icons/mdi/trash-can-outline';
+	import IconEdit from '~icons/mdi/edit-box-outline';
+	import IconQuestion from '~icons/mdi/question-box-outline';
+	import IconPlus from '~icons/mdi/plus-box-outline';
+
+	import { onMount } from 'svelte';
+	import PropertiesEditInput from './PropertiesEditInput.svelte';
+	import { superForm } from 'sveltekit-superforms/client';
 
 	export let properties: CreatePropertySchema[];
 	const { form, errors, enhance } = superForm(data, {
@@ -20,28 +29,6 @@
 			}
 		}
 	});
-
-	// const { form, errors, enhance } = superForm(data, {
-	// 	resetForm: true,
-	// 	onResult: ({ result }) => {
-	// 		if (result.type === 'success') {
-	// 			newPropertyInputOpen = false;
-	// 			return;
-	// 		} else {
-	// 			console.log('errors:', $errors);
-	// 		}
-	// 	}
-	// });
-
-	import IconProperties from '~icons/mdi/house-city-outline';
-	import IconTrash from '~icons/mdi/trash-can-outline';
-	import IconEdit from '~icons/mdi/edit-box-outline';
-	import IconQuestion from '~icons/mdi/question-box-outline';
-	import IconPlus from '~icons/mdi/plus-box-outline';
-
-	import { onMount } from 'svelte';
-	import PropertiesEditInput from './PropertiesEditInput.svelte';
-	import { superForm } from 'sveltekit-superforms/client';
 
 	/**
 	 * Modal for property information
@@ -120,9 +107,9 @@
 
 <!-- Confirm Delete Property -->
 {#if confirmDelete}
-	<aside class="alert variant-ghost-error flex-col items-center">
+	<aside class="alert variant-filled-error flex-col items-center">
 		<!-- Message -->
-		<div class="alert-message">
+		<div class="alert-message flex justify-center items-center">
 			<h3 class="h3">
 				If you delete this property you will loose all the bookings related to
 				it. Are you sure you want to delete it?
@@ -132,12 +119,12 @@
 		<div class="alert-actions">
 			<button
 				type="button"
-				class="btn btn-sm variant-filled mr-4"
+				class="btn variant-filled mr-4"
 				on:click={() => (confirmDelete = false)}>No</button
 			>
 			<form action="?/deleteProperty" method="POST" use:enhance>
 				<input type="hidden" name="id" value={currentPropertyId} />
-				<button name="delete" type="submit" class="btn btn-sm variant-filled"
+				<button name="delete" type="submit" class="btn variant-filled"
 					>Yes!</button
 				>
 			</form>
@@ -208,13 +195,50 @@
 	{:else}
 		<div class="grid grid-cols-10 gap-2 gap-y-4 justify-items-start items-end">
 			<button
-				class="col-span-8 flex"
+				class="col-span-8 flex relative"
 				on:click={() => handlePropertyCreationButton()}
 				><IconPlus
 					style="font-size: 1.5rem;"
 					class="text-surface-900 hover:text-surface-700 dark:text-slate-400 hover:dark:text-slate-50"
-				/><span class=" ml-3 self-center">Add a property</span></button
+				/><span class=" ml-3 self-center">Add a property</span>
+				<!-- Red Triangle that shows where to add property -->
+				<div class:arrow={properties.length === 0} class="z-10" /></button
 			>
 		</div>
 	{/if}
 </section>
+
+<style>
+	aside {
+		position: absolute;
+		z-index: 15;
+		top: 30%;
+		left: 0px;
+		width: 100%;
+		height: 35%;
+	}
+
+	.arrow {
+		position: absolute;
+		top: 35px;
+		left: 0;
+		width: 0;
+		height: 0;
+		border-left: 15px solid transparent;
+		border-right: 15px solid transparent;
+		border-bottom: 25px solid #ef4444;
+	}
+
+	@keyframes arrow-move {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(45px);
+		}
+	}
+
+	.arrow {
+		animation: arrow-move 1.5s ease-in-out infinite alternate;
+	}
+</style>
