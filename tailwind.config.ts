@@ -17,7 +17,12 @@ const config = {
 		)
 	],
 	theme: {
-		extend: {}
+		extend: {
+			screens: {
+				'2xl': '1450px'
+				// => @media (min-width: 1450px) { ... }
+			}
+		}
 	},
 	plugins: [
 		forms,

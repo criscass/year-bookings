@@ -23,9 +23,12 @@
 
 	function propertyChoiceHandler(currentValue: number) {
 		$storePropertyId = currentValue;
+		console.log('currentValue', currentValue);
 	}
 
-	$: $storePropertyId = currentValue;
+	onMount(() => {
+		$storePropertyId = currentValue;
+	});
 </script>
 
 <select

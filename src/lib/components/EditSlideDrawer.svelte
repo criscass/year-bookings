@@ -3,6 +3,7 @@
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import { isEditable2, borderColor, formStatus } from '../stores/store';
 	import IconClose from '~icons/mdi/close-box-outline';
+	import IconTrash from '~icons/mdi/trash-can-outline';
 
 	import ColorPicker from './ColorPicker.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
@@ -43,6 +44,7 @@
 
 <div bind:this={topDiv} class="absolute top-0 left-0" />
 
+<!-- /** *Delete message */ -->
 {#if visible}
 	<aside class="alert variant-filled-error flex-col items-center">
 		<!-- Message -->
@@ -68,107 +70,117 @@
 	</aside>
 {/if}
 
+<!-- /** *Editing drawer */ -->
 {#if !visible}
-	<form
-		method="POST"
-		action="?/updateBooking"
-		class="grid grid-cols-10 md:grid-cols-12 gap-4 p-4 backdrop-blur-md max-w-screen"
-		use:enhance
-	>
-		<input
-			type="hidden"
-			name="booking_id"
-			bind:value={$formStatus.booking_id}
-		/>
-		<!-- Booking name -->
-		<div class="col-span-8 md:col-span-4 md:order-1">
+	<div class="grid grid-cols-12 gap-2 relative">
+		<form
+			method="POST"
+			action="?/updateBooking"
+			class="col-span-12 md:col-span-11 grid grid-cols-10 gap-4 md:grid-cols-12 p-4 backdrop-blur-md max-w-screen"
+			use:enhance
+		>
 			<input
-				type="text"
-				name="guest_name"
-				placeholder={'Guest Name'}
-				autocomplete="off"
-				class="input"
-				bind:value={$formStatus.name}
+				type="hidden"
+				name="booking_id"
+				bind:value={$formStatus.booking_id}
 			/>
-			{#if $errors.guest_name}
-				<span class="block text-error-600 dark:text-error-500"
-					>{$errors.guest_name}</span
-				>
-			{/if}
-		</div>
+			<!-- Booking name -->
+			<div class="col-span-7 md:col-span-4 md:order-1 2xl:col-span-2">
+				<input
+					type="text"
+					name="guest_name"
+					placeholder={'Guest Name'}
+					autocomplete="off"
+					class="input"
+					bind:value={$formStatus.name}
+				/>
+				{#if $errors.guest_name}
+					<span class="block text-error-600 dark:text-error-500"
+						>{$errors.guest_name}</span
+					>
+				{/if}
+			</div>
 
-		<!-- close button -->
+			<!-- Check in date -->
+			<div
+				class="col-span-4 order-2 md:order-4 md:col-span-4 2xl:order-2 2xl:col-span-2"
+			>
+				<input
+					type="date"
+					name="start_on_day"
+					autocomplete="off"
+					placeholder="check-in date"
+					class="input"
+					inputmode="none"
+					bind:value={$formStatus.start_on_day}
+				/>
+				{#if $errors.start_on_day}
+					<span class="block text-error-600 dark:text-error-500"
+						>{$errors.start_on_day}</span
+					>
+				{/if}
+			</div>
+			<!-- Check out date -->
+			<div
+				class="col-span-4 order-3 md:order-5 md:col-span-4 2xl:order-3 2xl:col-span-2"
+			>
+				<input
+					type="date"
+					name="end_on_day"
+					placeholder="check-out"
+					autocomplete="off"
+					class="input"
+					inputmode="none"
+					bind:value={$formStatus.end_on_day}
+				/>
+				{#if $errors.end_on_day}
+					<span class="block text-error-600 dark:text-error-500"
+						>{$errors.end_on_day}</span
+					>
+				{/if}
+			</div>
 
-		<button
-			type="button"
-			on:click={() => closeDrawer()}
-			class="col-span-2 order-2 text-2xl flex justify-end md:order-3"
-			><IconClose class="text-slate-400 hover:text-slate-50 text-4xl" /></button
+			<!-- Color choice -->
+
+			<div
+				class=" md:static md:col-span-8 lg:justify-self-end md:order-2 col-span-10 order-5 2xl:order-4 2xl:col-span-5 2xl:justify-self-start"
+			>
+				<input type="hidden" name="color" bind:value={$borderColor} />
+				<ColorPicker />
+				{#if $errors.color}
+					<span class="block text-error-600 dark:text-error-500"
+						>{$errors.color}</span
+					>
+				{/if}
+			</div>
+
+			<!-- Submit button -->
+			<button
+				type="submit"
+				class:opacity-25={$errors._errors}
+				class="btn md:btn-md btn-sm order-4 px-4 py-2 md:px-8 w-full text-lg variant-filled col-span-2 self-center md:order-5 2xl:col-span-1"
+				>save</button
+			>
+		</form>
+		<div
+			class="absolute right-2 top-6 md:static col-span-1 gap-4 grid grid-cols-2 md:grid-rows-2 md:grid-cols-1 2xl:grid-cols-2 2xl:grid-rows-1 justify-center items-center order-1"
 		>
-
-		<!-- Check in date -->
-		<div class="col-span-5 md:order-4 md:col-span-5 order-3">
-			<input
-				type="date"
-				name="start_on_day"
-				autocomplete="off"
-				placeholder="check-in date"
-				class="input"
-				inputmode="none"
-				bind:value={$formStatus.start_on_day}
-			/>
-			{#if $errors.start_on_day}
-				<span class="block text-error-600 dark:text-error-500"
-					>{$errors.start_on_day}</span
-				>
-			{/if}
+			<!-- delete booking button -->
+			<button on:click={() => (visible = true)} class="2xl:col-span-1">
+				<IconTrash
+					class="text-3xl text-surface-900 hover:text-surface-700 dark:text-slate-400 hover:dark:text-slate-50"
+				/></button
+			>
+			<!-- close button -->
+			<button
+				type="button"
+				on:click={() => closeDrawer()}
+				class="2xl:col-span-1 order-2"
+				><IconClose
+					class="text-slate-400 hover:text-slate-50 text-3xl"
+				/></button
+			>
 		</div>
-		<!-- Check out date -->
-		<div class="col-span-5 md:order-5 md:col-span-5 order-4">
-			<input
-				type="date"
-				name="end_on_day"
-				placeholder="check-out"
-				autocomplete="off"
-				class="input"
-				inputmode="none"
-				bind:value={$formStatus.end_on_day}
-			/>
-			{#if $errors.end_on_day}
-				<span class="block text-error-600 dark:text-error-500"
-					>{$errors.end_on_day}</span
-				>
-			{/if}
-		</div>
-
-		<!-- Color choice -->
-
-		<div class="  md:col-span-6 md:order-2 col-span-8 order-5">
-			<input type="hidden" name="color" bind:value={$borderColor} />
-			<ColorPicker />
-			{#if $errors.color}
-				<span class="block text-error-600 dark:text-error-500"
-					>{$errors.color}</span
-				>
-			{/if}
-		</div>
-
-		<!-- Submit button -->
-		<button
-			type="submit"
-			class:opacity-25={$errors._errors}
-			class="btn md:btn-lg btn-sm px-8 py-6 text-lg variant-filled col-span-2 justify-self-center md:justify-self-end self-center h-8 w-8 md:h-10 md:w-28 order-7"
-			>save</button
-		>
-	</form>
-
-	<div class="flex w-full justify-center">
-		<button
-			class="btn variant-ringed-error w-4/6"
-			on:click={() => (visible = true)}
-		>
-			Delete this booking</button
-		>
 	</div>
 {/if}
 

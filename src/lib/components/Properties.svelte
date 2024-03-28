@@ -3,7 +3,7 @@
 	import PropertiesCreationInput from './PropertiesCreationInput.svelte';
 	import type { SuperValidated } from 'sveltekit-superforms';
 
-	import { newPropertyInputOpen } from '../stores/store';
+	import { newPropertyInputOpen, storePropertyId } from '../stores/store';
 
 	export let data: SuperValidated<CreatePropertySchema>;
 	export let bookings;
@@ -136,6 +136,7 @@
 	<div class="flex items-center font-semibold gap-8">
 		<IconProperties style="font-size: 2rem;" />
 		<span class="text-3xl font-bold">Properties</span>
+		<p class="text-2xl">{$storePropertyId}</p>
 	</div>
 
 	<div class="grid grid-cols-10 gap-2 gap-y-4 justify-items-start items-end">
@@ -152,9 +153,13 @@
 				</div>
 			{:else}
 				<div class="col-span-7 justify-self-start">
-					<p class="text-xl ps-4">
+					<a
+						on:click={() => ($storePropertyId = property.id)}
+						class="text-xl ps-4"
+						href="/calendar"
+					>
 						{property.property_name}
-					</p>
+					</a>
 				</div>
 
 				<!-- Property Informations, Modal -->

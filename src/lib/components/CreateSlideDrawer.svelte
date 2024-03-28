@@ -33,7 +33,7 @@
 >
 	<!-- Booking name -->
 
-	<div class="col-span-8 md:col-span-4 md:order-1">
+	<div class="col-span-8 md:col-span-4 md:order-1 2xl:col-span-2">
 		<input
 			type="text"
 			name="guest_name"
@@ -54,12 +54,14 @@
 	<button
 		type="button"
 		on:click={() => closeDrawer()}
-		class="col-span-2 order-2 text-2xl flex justify-end md:order-3"
-		><IconClose class="text-slate-400 hover:text-slate-50 text-4xl" /></button
+		class="col-span-2 order-2 text-2xl flex justify-end md:order-3 2xl:order-6 2xl:col-span-1"
+		><IconClose class="text-slate-400 hover:text-slate-50 text-4xl " /></button
 	>
 
 	<!-- Check in date -->
-	<div class="col-span-5 md:order-4 md:col-span-5 order-3">
+	<div
+		class="col-span-5 md:order-4 md:col-span-5 order-3 2xl:order-2 2xl:col-span-2"
+	>
 		<input
 			type="date"
 			name="start_on_day"
@@ -76,7 +78,9 @@
 		{/if}
 	</div>
 	<!-- Check out date -->
-	<div class="col-span-5 md:order-5 md:col-span-5 order-4">
+	<div
+		class="col-span-5 md:order-5 md:col-span-5 order-4 2xl:order-3 2xl:col-span-2"
+	>
 		<input
 			type="date"
 			name="end_on_day"
@@ -95,7 +99,9 @@
 
 	<!-- Color choice -->
 
-	<div class=" md:col-span-6 md:order-2 col-span-8 order-5">
+	<div
+		class=" md:col-span-6 md:order-2 col-span-8 order-5 2xl:order-4 2xl:col-span-4 2xl:justify-self-start"
+	>
 		<input type="hidden" name="color" bind:value={$borderColor} />
 		<ColorPicker />
 		{#if $errors.color}
@@ -112,7 +118,7 @@
 	<button
 		type="submit"
 		class:opacity-25={$errors._errors}
-		class="btn md:btn-lg btn-sm px-8 py-6 text-lg variant-filled col-span-2 justify-self-center md:justify-self-end self-center h-8 w-8 md:h-10 md:w-28 order-7"
+		class="btn md:btn-lg btn-sm px-8 py-6 text-lg variant-filled col-span-2 justify-self-center md:justify-self-end self-center h-8 w-8 md:h-10 md:w-28 order-7 2xl:order-5 2xl:col-span-1"
 		>save</button
 	>
 </form>

@@ -27,6 +27,10 @@
 		$isEditable2 = false;
 		$isEditable = !$isEditable;
 	}
+	function handleCloseDrawers() {
+		$isEditable2 = false;
+		$isEditable = false;
+	}
 </script>
 
 <!-- App Shell -->
@@ -55,7 +59,7 @@
 						>+</button
 					>
 				{/if}
-				<a href="/account" class="relative">
+				<a href="/account" class="relative" on:click={handleCloseDrawers}>
 					<IconAccountBoxOutline class="icon-box hover:opacity-50" />
 					<div class="z-10" class:arrow={$createYourFirstProperty} />
 				</a>
