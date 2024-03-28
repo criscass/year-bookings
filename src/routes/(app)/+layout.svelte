@@ -55,7 +55,7 @@
 						transition:scale|global={{ duration: 300 }}
 						type="button"
 						on:click={() => handleClick()}
-						class="btn btn-m rounded-2xl text-2xl variant-filled-surface"
+						class="btn btn-sm rounded-xl sm:btn-md sm:rounded-2xl sm:text-2xl text-lg variant-filled-surface"
 						>+</button
 					>
 				{/if}

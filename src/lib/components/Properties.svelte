@@ -136,7 +136,6 @@
 	<div class="flex items-center font-semibold gap-8">
 		<IconProperties style="font-size: 2rem;" />
 		<span class="text-3xl font-bold">Properties</span>
-		<p class="text-2xl">{$storePropertyId}</p>
 	</div>
 
 	<div class="grid grid-cols-10 gap-2 gap-y-4 justify-items-start items-end">

@@ -34,7 +34,7 @@
 <select
 	bind:value={currentValue}
 	on:change={() => propertyChoiceHandler(currentValue)}
-	class="select w-32 sm:w-44"
+	class="select w-26 sm:w-44 md:w-64 text-sm sm:text-lg"
 >
 	{#each properties as property}
 		<option value={property.id} selected={property.id == $storePropertyId}
