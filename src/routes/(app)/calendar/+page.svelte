@@ -19,6 +19,8 @@
 		(probertyBooking) => probertyBooking.property_id === $storePropertyId
 	);
 
+	// onMount(() => console.log(propertyBookings));
+
 	data.properties.length === 0
 		? ($createYourFirstProperty = true)
 		: ($createYourFirstProperty = false);

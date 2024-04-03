@@ -55,16 +55,27 @@ export type LoginUserSchema = typeof loginUserSchema;
 /**
  * Create Booking Form Schema
  */
-export const createBookingSchema = z.object({
-	guest_name: z
-		.string()
-		.min(2, 'The guest name should be at least 2 characters')
-		.max(28, 'The guest name cannot exceed 28 characters'),
-	start_on_day: z.string().min(1, 'Please enter a check-in date'),
-	end_on_day: z.string().min(1, 'Please enter a check-out date'),
-	color: z.string().min(1, 'Please choose a color'),
-	property_id: z.number()
-});
+export const createBookingSchema = z
+	.object({
+		guest_name: z
+			.string()
+			.min(2, 'The guest name should be at least 2 characters')
+			.max(28, 'The guest name cannot exceed 28 characters'),
+		start_on_day: z.string().min(1, 'Please enter a check-in date'),
+		end_on_day: z.string().min(1, 'Please enter a check-out date'),
+		color: z.string().min(1, 'Please choose a color'),
+		property_id: z.number()
+	})
+	.refine(
+		(data) =>
+			new Date(data.start_on_day).getTime() <
+			new Date(data.end_on_day).getTime(),
+
+		{
+			message: 'Check-out date  cannot be earlier than check-in date.',
+			path: ['end_on_day']
+		}
+	);
 export type CreateBookingSchema = typeof createBookingSchema;
 
 /**

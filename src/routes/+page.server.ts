@@ -7,6 +7,6 @@ export const load: PageServerLoad = async (event) => {
 		throw redirect(302, '/calendar');
 	}
 	if (!session) {
-		throw redirect(302, '/login');
+		throw redirect(302, '/home');
 	}
 };
